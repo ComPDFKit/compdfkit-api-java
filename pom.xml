@@ -41,7 +41,7 @@
     </dependencies>
 
 
-    <groupId>api-server.compdf.com</groupId>
+    <groupId>com.compdf</groupId>
     <artifactId>compdfkit-pdf-api-java</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
