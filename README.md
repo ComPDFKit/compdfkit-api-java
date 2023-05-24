@@ -2,6 +2,14 @@
 
 This is the compdfkit-pdf-api Java SDK  for the [ComPDFKit](https://api.compdf.com/api/docs/introduction) API.
 
+## Requirements
+
+JAVA JDK 1.8 and later.
+
+Maven 3.6 and later.
+
+Springboot 2.3.0.RELEASE and later.
+
 ## Installation
 
 Add the following dependency to your pom.xml:
@@ -34,11 +42,11 @@ A task ID is automatically generated for you based on the type of PDF tool you c
 // Create a client
 ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
 
-// Create an example of a PDF TO EXCEL task
-CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_EXCEL.getValue());
+// Create an example of a PDF TO WORD task
+        CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 //Get a task id
-String jobId = result.getTaskId();
+        String jobId = result.getTaskId();
 ```
 
 ## Upload Files
@@ -52,21 +60,13 @@ Upload the original file and bind the file to the task ID. The field parameter i
 ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
 
 // Create a task
-// Create an example of a PDF TO EXCEL task
-CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_EXCEL.getValue());
+// Create an example of a PDF TO WORD task
+CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String jobId = result.getTaskId();
 
-// Upload files
-
-// 1.Setting the file parameters
-
-// The parameter field only sets the processing parameters for the currently supported functions. If no parameters are set, the default value is used. The JSON format and field explanation corresponding to different function types are shown in  PDF file transfer tool guide.
-PDFToExcelParameter  parameter = FileParameterFactory.getFileParameterByType(PDFToOfficeEnum.PDF_TO_EXCEL);
-parameter.setContentOptions("1");
-
-// 2.Upload file
+// Upload file
 client.uploadFile(<convertFile>, jobId);
 ```
 
@@ -82,20 +82,12 @@ ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO EXCEL task
-CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_EXCEL.getValue());
+CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String jobId = result.getTaskId();
 
 // Upload files
-
-// 1.Setting the file parameters
-
-// The parameter field only sets the processing parameters for the currently supported functions. If no parameters are set, the default value is used. The JSON format and field explanation corresponding to different function types are shown in  PDF file transfer tool guide.
-PDFToExcelParameter  parameter = FileParameterFactory.getFileParameterByType(PDFToOfficeEnum.PDF_TO_EXCEL);
-parameter.setContentOptions("1");
-
-// 2.Upload file
 client.uploadFile(<convertFile>, jobId);
 
 // execute Task
@@ -111,21 +103,13 @@ Request task status and file-related metadata based on the task ID.
 ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
 
 // Create a task
-// Create an example of a PDF TO EXCEL task
-CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_EXCEL.getValue());
+// Create an example of a PDF TO WORD task
+CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String jobId = result.getTaskId();
 
 // Upload files
-
-// 1.Setting the file parameters
-
-// The parameter field only sets the processing parameters for the currently supported functions. If no parameters are set, the default value is used. The JSON format and field explanation corresponding to different function types are shown in  PDF file transfer tool guide.
-PDFToExcelParameter  parameter = FileParameterFactory.getFileParameterByType(PDFToOfficeEnum.PDF_TO_EXCEL);
-parameter.setContentOptions("1");
-
-// 2.Upload file
 client.uploadFile(<convertFile>, jobId);
 
 // execute Task
