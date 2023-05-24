@@ -8,7 +8,7 @@ Add the following dependency to your pom.xml:
 
 ```
 <dependency>
-    <groupId>com.compdfkit</groupId>
+    <groupId>com.compdf</groupId>
     <artifactId>compdfkit-pdf-api-java</artifactId>
     <version>1.0.0</version>
 </dependency>
