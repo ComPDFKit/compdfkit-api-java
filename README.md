@@ -43,10 +43,10 @@ A task ID is automatically generated for you based on the type of PDF tool you c
 ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
 
 // Create an example of a PDF TO WORD task
-        CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
+CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 //Get a task id
-        String jobId = result.getTaskId();
+String jobId = result.getTaskId();
 ```
 
 ## Upload Files
