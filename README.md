@@ -6,9 +6,7 @@ This is the compdfkit-pdf-api Java SDK  for the [ComPDFKit](https://api.compdf.c
 
 JAVA JDK 1.8 and later.
 
-Maven 3.6 and later.
-
-Springboot 2.3.0.RELEASE and later.
+Maven.
 
 ## Installation
 
@@ -18,7 +16,7 @@ Add the following dependency to your pom.xml:
 <dependency>
     <groupId>com.compdf</groupId>
     <artifactId>compdfkit-pdf-api-java</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.4</version>
 </dependency>
 ```
 
@@ -26,12 +24,12 @@ Add the following dependency to your pom.xml:
 
 You can use your **publicKey** and **secretKey** to complete the authentication
 
-Project public Key ：You can find the public key in [Management Panel](https://api-dashboard.compdf.com/api/keys).
+Project public Key : You can find the public key in [Management Panel](https://api-dashboard.compdf.com/api/keys).
 
-Project secret Key ： You can find the secret Key in [Management Panel](https://api-dashboard.compdf.com/api/keys).
+Project secret Key : You can find the secret Key in [Management Panel](https://api-dashboard.compdf.com/api/keys).
 
 ```java
-ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
+ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 ```
 
 ## Create Task
@@ -40,13 +38,14 @@ A task ID is automatically generated for you based on the type of PDF tool you c
 
 ```java
 // Create a client
-ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
+ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 
+// Create a task
 // Create an example of a PDF TO WORD task
-CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
+CCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
 
-//Get a task id
-String jobId = result.getTaskId();
+// Get a task id
+String taskId = result.getTaskId();
 ```
 
 ## Upload Files
@@ -57,17 +56,17 @@ Upload the original file and bind the file to the task ID. The field parameter i
 
 ```java
 // Create a client
-ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
+ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
+CCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
-String jobId = result.getTaskId();
+String taskId = result.getTaskId();
 
-// Upload file
-client.uploadFile(<convertFile>, jobId);
+// Upload files
+client.uploadFile(<convertFile>, taskId);
 ```
 
 
@@ -78,20 +77,20 @@ After the file upload is completed, call this interface with the task ID to proc
 
 ```java
 // Create a client
-ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
+ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 
 // Create a task
-// Create an example of a PDF TO EXCEL task
-CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
+// Create an example of a PDF TO WORD task
+CCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
-String jobId = result.getTaskId();
+String taskId = result.getTaskId();
 
 // Upload files
-client.uploadFile(<convertFile>, jobId);
+client.uploadFile(<convertFile>, taskId);
 
 // execute Task
-client.executeTask(jobId);
+client.executeTask(taskId);
 ```
 
 ## Get TaskInfo
@@ -100,23 +99,23 @@ Request task status and file-related metadata based on the task ID.
 
 ```java
 // Create a client
-ComPdfKitClient client = new ComPdfKitClient(<publicKey>, <secretKey>);
+ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CreateTaskResult result = client.createTask(PDFToOfficeEnum.PDF_TO_WORD.getValue());
+CCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
-String jobId = result.getTaskId();
+String taskId = result.getTaskId();
 
 // Upload files
-client.uploadFile(<convertFile>, jobId);
+client.uploadFile(<convertFile>, taskId);
 
 // execute Task
-client.executeTask(jobId);
+client.executeTask(taskId);
 
 // query TaskInfo
-QueryTaskInfoResult taskInfo = client.queryTaskInfo(jobId)
+CTaskInfoResult taskInfo = client.getTaskInfo(taskId);
 ```
 
 ## Resources

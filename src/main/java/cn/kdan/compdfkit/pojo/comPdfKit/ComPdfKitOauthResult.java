@@ -80,4 +80,18 @@ public class ComPdfKitOauthResult {
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
+    @Override
+    public String toString() {
+        return "ComPdfKitOauthResult{" +
+                "expiresIn='" + expiresIn + '\'' +
+                ", scope='" + scope + '\'' +
+                ", tenantId='" + tenantId + '\'' +
+                ", accessToken='" + accessToken + '\'' +
+                ", tokenType='" + tokenType + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectId='" + projectId + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
+                '}';
+    }
 }
