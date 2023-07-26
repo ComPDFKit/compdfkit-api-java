@@ -26,11 +26,22 @@ import java.util.List;
 
 import static java.time.Duration.ofSeconds;
 
-
+/**
+ * For execution ComPDFKit API
+ */
 public class ComPDFKitClient {
 
+    /**
+     * httpClient
+     */
     private final CHttpClient httpClient;
 
+    /**
+     * ComPDFKitClient
+     *
+     * @param publicKey your publicKey
+     * @param secretKey your secretKey
+     */
     public ComPDFKitClient(String publicKey, String secretKey) {
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
         restTemplateBuilder.setReadTimeout(ofSeconds(60 * 5));
@@ -38,7 +49,26 @@ public class ComPDFKitClient {
         restTemplateBuilder.setBufferRequestBody(false);
         RestTemplate restTemplate = restTemplateBuilder
                 .build();
-        httpClient = new CHttpClient(restTemplate,publicKey,secretKey);
+        httpClient = new CHttpClient(restTemplate, publicKey, secretKey);
+        httpClient.refreshAccessToken();
+    }
+
+    /**
+     * ComPDFKitClient
+     *
+     * @param publicKey      your publicKey
+     * @param secretKey      your secretKey
+     * @param readTimeout    readTimeout Seconds
+     * @param connectTimeout connectTimeout Seconds
+     */
+    public ComPDFKitClient(String publicKey, String secretKey, Long readTimeout, Long connectTimeout) {
+        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
+        restTemplateBuilder.setReadTimeout(ofSeconds(readTimeout));
+        restTemplateBuilder.setConnectTimeout(ofSeconds(connectTimeout));
+        restTemplateBuilder.setBufferRequestBody(false);
+        RestTemplate restTemplate = restTemplateBuilder
+                .build();
+        httpClient = new CHttpClient(restTemplate, publicKey, secretKey);
         httpClient.refreshAccessToken();
     }
 
@@ -47,7 +77,7 @@ public class ComPDFKitClient {
      *
      * @param publicKey publicKey
      * @param secretKey secretKey
-     * @return String
+     * @return ComPdfKitOauthResult
      */
     private ComPdfKitOauthResult getComPdfKitAuth(String publicKey, String secretKey) {
         return httpClient.getComPdfKitAuth(publicKey, secretKey);
@@ -56,7 +86,7 @@ public class ComPDFKitClient {
     /**
      * get Support tools
      *
-     * @return ToolSupportResult
+     * @return CTool
      */
     public List<CTool> getTools() {
         return httpClient.getTools();
@@ -66,30 +96,30 @@ public class ComPDFKitClient {
      * get file info
      *
      * @param fileKey fileKey
-     * @return FileInfo
+     * @return CFileInfo
      */
     public CFileInfo getFileInfo(String fileKey) {
-        return httpClient.queryFileInfo(fileKey);
+        return httpClient.getFileInfo(fileKey);
     }
 
     /**
-     * queryAssetInfo
+     * get asset info
      *
-     * @return QueryTenantAssetResult
+     * @return CTenantAssetResult
      */
     public CTenantAssetResult getAssetInfo() {
-        return httpClient.queryAssetInfo();
+        return httpClient.getAssetInfo();
     }
 
     /**
-     * queryTaskList
+     * get task list
      *
      * @param page page
      * @param size size
-     * @return QueryTaskRecordsResult
+     * @return CTaskRecordsResult
      */
     public CTaskRecordsResult getTaskList(String page, String size) {
-        return httpClient.queryTaskList(page, size);
+        return httpClient.getTaskList(page, size);
     }
 
 
@@ -97,7 +127,7 @@ public class ComPDFKitClient {
      * createTask
      *
      * @param executeTypeUrl task execution type
-     * @return CreateTaskResult
+     * @return CCreateTaskResult
      */
     public CCreateTaskResult createTask(String executeTypeUrl) {
         return httpClient.createTask(executeTypeUrl);
@@ -107,9 +137,9 @@ public class ComPDFKitClient {
      * createTask
      *
      * @param officeToPDFEnum task execution type
-     * @return CreateTaskResult
+     * @return CCreateTaskResult
      */
-    public CCreateTaskResult createTask(COfficeToPDFEnum officeToPDFEnum){
+    public CCreateTaskResult createTask(COfficeToPDFEnum officeToPDFEnum) {
         return this.createTask(officeToPDFEnum.getValue());
     }
 
@@ -117,9 +147,9 @@ public class ComPDFKitClient {
      * createTask
      *
      * @param pdfServerEnum task execution type
-     * @return CreateTaskResult
+     * @return CCreateTaskResult
      */
-    public CCreateTaskResult createTask(CPDFServerEnum pdfServerEnum){
+    public CCreateTaskResult createTask(CPDFServerEnum pdfServerEnum) {
         return this.createTask(pdfServerEnum.getValue());
     }
 
@@ -127,9 +157,9 @@ public class ComPDFKitClient {
      * createTask
      *
      * @param pdfToOfficeEnum task execution type
-     * @return CreateTaskResult
+     * @return CCreateTaskResult
      */
-    public CCreateTaskResult createTask(CPDFToOfficeEnum pdfToOfficeEnum){
+    public CCreateTaskResult createTask(CPDFToOfficeEnum pdfToOfficeEnum) {
         return this.createTask(pdfToOfficeEnum.getValue());
     }
 
@@ -137,9 +167,9 @@ public class ComPDFKitClient {
      * createTask
      *
      * @param documentAIEnum task execution type
-     * @return CreateTaskResult
+     * @return CCreateTaskResult
      */
-    public CCreateTaskResult createTask(CDocumentAIEnum documentAIEnum){
+    public CCreateTaskResult createTask(CDocumentAIEnum documentAIEnum) {
         return this.createTask(documentAIEnum.getValue());
     }
 
@@ -149,7 +179,7 @@ public class ComPDFKitClient {
      * @param file     file
      * @param taskId   taskId
      * @param password password
-     * @return UploadFileResult
+     * @return CUploadFileResult
      */
     public CUploadFileResult uploadFile(File file, String taskId, String password) {
         return getUploadFileResult(file, taskId, password, null);
@@ -161,22 +191,25 @@ public class ComPDFKitClient {
      * @param file     file
      * @param taskId   taskId
      * @param password password
-     * @return UploadFileResult
+     * @param fileName fileName
+     * @return CUploadFileResult
      */
     public CUploadFileResult uploadFile(InputStream file, String taskId, String password, String fileName) {
-        return getUploadFileResult(file, taskId, password, null,fileName);
+        return getUploadFileResult(file, taskId, password, null, fileName);
     }
 
     /**
      * uploadFile
      *
-     * @param file     file
+     * @param file     fileUrl
      * @param taskId   taskId
      * @param password password
-     * @return UploadFileResult
+     * @param fileName fileName
+     * @return CUploadFileResult
+     * @throws IOException url openConnection error
      */
     public CUploadFileResult uploadFile(URL file, String taskId, String password, String fileName) throws IOException {
-        return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, null,fileName);
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, null, fileName);
     }
 
     /**
@@ -185,10 +218,11 @@ public class ComPDFKitClient {
      * @param file     file
      * @param taskId   taskId
      * @param password password
-     * @return UploadFileResult
+     * @return CUploadFileResult
+     * @throws IOException file getInputStream error
      */
     public CUploadFileResult uploadFile(MultipartFile file, String taskId, String password) throws IOException {
-        return getUploadFileResult(file.getInputStream(), taskId, password, null,file.getOriginalFilename());
+        return getUploadFileResult(file.getInputStream(), taskId, password, null, file.getOriginalFilename());
     }
 
     /**
@@ -196,7 +230,7 @@ public class ComPDFKitClient {
      *
      * @param file   file
      * @param taskId taskId
-     * @return UploadFileResult
+     * @return CUploadFileResult
      */
     public CUploadFileResult uploadFile(File file, String taskId) {
         return getUploadFileResult(file, taskId, null, null);
@@ -205,34 +239,38 @@ public class ComPDFKitClient {
     /**
      * uploadFile
      *
-     * @param file   file
-     * @param taskId taskId
-     * @return UploadFileResult
-     */
-    public CUploadFileResult uploadFile(InputStream file, String taskId, String fileName) {
-        return getUploadFileResult(file, taskId, null, null,fileName);
-    }
-
-    /**
-     * uploadFile
-     *
-     * @param file   file
-     * @param taskId taskId
-     * @return UploadFileResult
-     */
-    public CUploadFileResult uploadFile(URL file, String taskId, String fileName) throws IOException {
-        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, null,fileName);
-    }
-
-    /**
-     * uploadFile
-     *
      * @param file     file
      * @param taskId   taskId
-     * @return UploadFileResult
+     * @param fileName fileName
+     * @return CUploadFileResult
+     */
+    public CUploadFileResult uploadFile(InputStream file, String taskId, String fileName) {
+        return getUploadFileResult(file, taskId, null, null, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file     fileUrl
+     * @param taskId   taskId
+     * @param fileName fileName
+     * @return CUploadFileResult
+     * @throws IOException url openConnection error
+     */
+    public CUploadFileResult uploadFile(URL file, String taskId, String fileName) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, null, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file   file
+     * @param taskId taskId
+     * @return CUploadFileResult
+     * @throws IOException file getInputStream error
      */
     public CUploadFileResult uploadFile(MultipartFile file, String taskId) throws IOException {
-        return getUploadFileResult(file.getInputStream(), taskId, null, null,file.getOriginalFilename());
+        return getUploadFileResult(file.getInputStream(), taskId, null, null, file.getOriginalFilename());
     }
 
     /**
@@ -241,11 +279,11 @@ public class ComPDFKitClient {
      * @param file          file
      * @param taskId        taskId
      * @param password      password
-     * @param CFileParameter fileParameter
-     * @return UploadFileResult
+     * @param fileParameter fileParameter
+     * @return CUploadFileResult
      */
-    public CUploadFileResult uploadFile(File file, String taskId, String password, CFileParameter CFileParameter) {
-        return getUploadFileResult(file, taskId, password, CFileParameter);
+    public CUploadFileResult uploadFile(File file, String taskId, String password, CFileParameter fileParameter) {
+        return getUploadFileResult(file, taskId, password, fileParameter);
     }
 
     /**
@@ -254,11 +292,27 @@ public class ComPDFKitClient {
      * @param file          file
      * @param taskId        taskId
      * @param password      password
-     * @param CFileParameter fileParameter
-     * @return UploadFileResult
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @return CUploadFileResult
      */
-    public CUploadFileResult uploadFile(InputStream file, String taskId, String password, CFileParameter CFileParameter, String fileName) {
-        return getUploadFileResult(file, taskId, password, CFileParameter,fileName);
+    public CUploadFileResult uploadFile(InputStream file, String taskId, String password, CFileParameter fileParameter, String fileName) {
+        return getUploadFileResult(file, taskId, password, fileParameter, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          fileUrl
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @return CUploadFileResult
+     * @throws IOException url openConnection error
+     */
+    public CUploadFileResult uploadFile(URL file, String taskId, String password, CFileParameter fileParameter, String fileName) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, fileParameter, fileName);
     }
 
     /**
@@ -267,105 +321,111 @@ public class ComPDFKitClient {
      * @param file          file
      * @param taskId        taskId
      * @param password      password
-     * @param CFileParameter fileParameter
-     * @return UploadFileResult
+     * @param fileParameter fileParameter
+     * @return CUploadFileResult
+     * @throws IOException file getInputStream error
      */
-    public CUploadFileResult uploadFile(URL file, String taskId, String password, CFileParameter CFileParameter, String fileName) throws IOException {
-        return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, CFileParameter,fileName);
+    public CUploadFileResult uploadFile(MultipartFile file, String taskId, String password, CFileParameter fileParameter) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, password, fileParameter, file.getOriginalFilename());
     }
 
     /**
      * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @return CUploadFileResult
+     */
+    public CUploadFileResult uploadFile(File file, String taskId, CFileParameter fileParameter) {
+        return getUploadFileResult(file, taskId, null, fileParameter);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @return CUploadFileResult
+     */
+    public CUploadFileResult uploadFile(InputStream file, String taskId, CFileParameter fileParameter, String fileName) {
+        return getUploadFileResult(file, taskId, null, fileParameter, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @return CUploadFileResult
+     * @throws IOException url openConnection error
+     */
+    public CUploadFileResult uploadFile(URL file, String taskId, CFileParameter fileParameter, String fileName) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, fileParameter, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @return CUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CUploadFileResult uploadFile(MultipartFile file, String taskId, CFileParameter fileParameter) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename());
+    }
+
+    /**
+     * getUploadFileResult
      *
      * @param file          file
      * @param taskId        taskId
      * @param password      password
-     * @param CFileParameter fileParameter
-     * @return UploadFileResult
+     * @param fileParameter fileParameter
+     * @return CUploadFileResult
      */
-    public CUploadFileResult uploadFile(MultipartFile file, String taskId, String password, CFileParameter CFileParameter) throws IOException {
-        return getUploadFileResult(file.getInputStream(), taskId, password, CFileParameter,file.getOriginalFilename());
+    private CUploadFileResult getUploadFileResult(File file, String taskId, String password, CFileParameter fileParameter) {
+        return httpClient.getUploadFileResult(file, taskId, password, fileParameter);
     }
 
     /**
-     * uploadFile
+     * getUploadFileResult
      *
      * @param file          file
      * @param taskId        taskId
-     * @param CFileParameter fileParameter
-     * @return UploadFileResult
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @return CUploadFileResult
      */
-    public CUploadFileResult uploadFile(File file, String taskId, CFileParameter CFileParameter) {
-        return getUploadFileResult(file, taskId, null, CFileParameter);
+    private CUploadFileResult getUploadFileResult(InputStream file, String taskId, String password, CFileParameter fileParameter, String fileName) {
+        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, fileName);
     }
-
-    /**
-     * uploadFile
-     *
-     * @param file          file
-     * @param taskId        taskId
-     * @param CFileParameter fileParameter
-     * @return UploadFileResult
-     */
-    public CUploadFileResult uploadFile(InputStream file, String taskId, CFileParameter CFileParameter, String fileName) {
-        return getUploadFileResult(file, taskId, null, CFileParameter,fileName);
-    }
-
-    /**
-     * uploadFile
-     *
-     * @param file          file
-     * @param taskId        taskId
-     * @param CFileParameter fileParameter
-     * @return UploadFileResult
-     */
-    public CUploadFileResult uploadFile(URL file, String taskId, CFileParameter CFileParameter, String fileName) throws IOException {
-        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, CFileParameter,fileName);
-    }
-
-    /**
-     * uploadFile
-     *
-     * @param file          file
-     * @param taskId        taskId
-     * @param CFileParameter fileParameter
-     * @return UploadFileResult
-     */
-    public CUploadFileResult uploadFile(MultipartFile file, String taskId, CFileParameter CFileParameter) throws IOException {
-        return getUploadFileResult(file.getInputStream(), taskId, null, CFileParameter,file.getOriginalFilename());
-    }
-
-    private CUploadFileResult getUploadFileResult(File file, String taskId, String password, CFileParameter CFileParameter) {
-        return httpClient.getUploadFileResult(file, taskId, password, CFileParameter);
-    }
-
-    private CUploadFileResult getUploadFileResult(InputStream file, String taskId, String password, CFileParameter CFileParameter, String fileName) {
-        return httpClient.getUploadFileResult(file, taskId, password, CFileParameter,fileName);
-    }
-
-//    private UploadFileResult getUploadFileResult(URL file, String taskId, String password, FileParameter fileParameter,String fileName) throws IOException {
-//        return httpClient.getUploadFileResult(file.openConnection().getInputStream(), taskId, password, fileParameter,fileName);
-//    }
-
 
     /**
      * executeTask
      *
      * @param taskId taskId
-     * @return CreateTaskResult
+     * @return CCreateTaskResult
      */
     public CCreateTaskResult executeTask(String taskId) {
         return httpClient.executeTask(taskId);
     }
 
     /**
-     * Query task file status
+     * get task file info
      *
      * @param taskId taskId
-     * @return QueryTaskInfoResult
+     * @return CTaskInfoResult
      */
     public CTaskInfoResult getTaskInfo(String taskId) {
-        return httpClient.queryTaskInfo(taskId);
+        return httpClient.getTaskInfo(taskId);
     }
 
 

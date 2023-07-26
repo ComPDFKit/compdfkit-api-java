@@ -30,7 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-
+/**
+ * HttpClient
+ */
 public class CHttpClient {
 
     private final RestTemplate restTemplate;
@@ -41,7 +43,14 @@ public class CHttpClient {
     private final String publicKey;
     private final String secretKey;
 
-    CHttpClient(RestTemplate restTemplate, String publicKey, String secretKey){
+    /**
+     * CHttpClient
+     *
+     * @param restTemplate restTemplate
+     * @param publicKey    publicKey
+     * @param secretKey    secretKey
+     */
+    CHttpClient(RestTemplate restTemplate, String publicKey, String secretKey) {
         this.address = "https://api-server.compdf.com/server/";
         this.restTemplate = restTemplate;
         this.publicKey = publicKey;
@@ -49,31 +58,56 @@ public class CHttpClient {
         this.refreshAccessToken();
     }
 
+    /**
+     * basicHeaders
+     *
+     * @return HttpHeaders
+     */
     private HttpHeaders basicHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + this.getAccessToken());
         return headers;
     }
 
-    public String getAccessToken() {
+    /**
+     * getAccessToken
+     *
+     * @return toke
+     */
+    String getAccessToken() {
         if (ObjectUtils.isEmpty(expireTime) || System.currentTimeMillis() > expireTime) {
             refreshAccessToken();
         }
         return accessToken;
     }
 
-    public void setAccessToken(String token, long expiresIn) {
+    /**
+     * setAccessToken
+     *
+     * @param token     token
+     * @param expiresIn expiresIn
+     */
+    void setAccessToken(String token, long expiresIn) {
         accessToken = token;
         expireTime = System.currentTimeMillis() + expiresIn * 1000L;
     }
 
+    /**
+     * refreshAccessToken
+     */
     void refreshAccessToken() {
         // Call the API to refresh the token
         ComPdfKitOauthResult newToken = getComPdfKitAuth(this.publicKey, this.secretKey);
         setAccessToken(newToken.getAccessToken(), Long.parseLong(newToken.getExpiresIn()));
     }
 
-
+    /**
+     * getComPdfKitAuth
+     *
+     * @param publicKey publicKey
+     * @param secretKey secretKey
+     * @return ComPdfKitOauthResult
+     */
     ComPdfKitOauthResult getComPdfKitAuth(String publicKey, String secretKey) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -100,6 +134,11 @@ public class CHttpClient {
         return responseEntity.getBody().getData();
     }
 
+    /**
+     * getTools
+     *
+     * @return List<CTool>
+     */
     List<CTool> getTools() {
         String url = address.concat(ComPDFKitConstant.API_V1_TOOL_SUPPORT);
         ResponseEntity<ComPdfKitResult<List<CTool>>> response;
@@ -122,7 +161,13 @@ public class CHttpClient {
         return response.getBody().getData();
     }
 
-    CFileInfo queryFileInfo(String fileKey) {
+    /**
+     * getFileInfo
+     *
+     * @param fileKey fileKey
+     * @return CFileInfo
+     */
+    CFileInfo getFileInfo(String fileKey) {
         String url = address.concat(ComPDFKitConstant.API_V1_FILE_INFO).concat("?fileKey=").concat(fileKey);
         ResponseEntity<ComPdfKitResult<CFileInfo>> response;
         ParameterizedTypeReference<ComPdfKitResult<CFileInfo>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<CFileInfo>>() {
@@ -144,7 +189,12 @@ public class CHttpClient {
         return response.getBody().getData();
     }
 
-    CTenantAssetResult queryAssetInfo() {
+    /**
+     * getAssetInfo
+     *
+     * @return CTenantAssetResult
+     */
+    CTenantAssetResult getAssetInfo() {
         String url = address.concat(ComPDFKitConstant.API_V1_ASSET_INFO);
         ResponseEntity<ComPdfKitResult<CTenantAssetResult>> response;
         ParameterizedTypeReference<ComPdfKitResult<CTenantAssetResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<CTenantAssetResult>>() {
@@ -166,7 +216,14 @@ public class CHttpClient {
         return response.getBody().getData();
     }
 
-    CTaskRecordsResult queryTaskList(String page, String size) {
+    /**
+     * getTaskList
+     *
+     * @param page page
+     * @param size size
+     * @return CTaskRecordsResult
+     */
+    CTaskRecordsResult getTaskList(String page, String size) {
         if (StringUtils.isEmpty(page)) {
             page = "1";
         }
@@ -194,6 +251,12 @@ public class CHttpClient {
         return response.getBody().getData();
     }
 
+    /**
+     * createTask
+     *
+     * @param executeTypeUrl executeTypeUrl
+     * @return CCreateTaskResult
+     */
     CCreateTaskResult createTask(String executeTypeUrl) {
         String url = address.concat(ComPDFKitConstant.API_V1_CREATE_TASK).replace("{executeTypeUrl}", executeTypeUrl);
         ResponseEntity<ComPdfKitResult<CCreateTaskResult>> response;
@@ -216,15 +279,34 @@ public class CHttpClient {
         return response.getBody().getData();
     }
 
-    CUploadFileResult getUploadFileResult(File file, String taskId, String password, CFileParameter CFileParameter) {
+    /**
+     * getUploadFileResult
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @return CUploadFileResult
+     */
+    CUploadFileResult getUploadFileResult(File file, String taskId, String password, CFileParameter fileParameter) {
         try {
-            return this.getUploadFileResult(new FileInputStream(file),taskId,password, CFileParameter,file.getName());
+            return this.getUploadFileResult(new FileInputStream(file), taskId, password, fileParameter, file.getName());
         } catch (FileNotFoundException e) {
-            throw new ComPDFKitException(e.getMessage(),e);
+            throw new ComPDFKitException(e.getMessage(), e);
         }
     }
 
-    CUploadFileResult getUploadFileResult(InputStream fileInputStream, String taskId, String password, CFileParameter CFileParameter, String fileName) {
+    /**
+     * getUploadFileResult
+     *
+     * @param fileInputStream fileInputStream
+     * @param taskId          taskId
+     * @param password        password
+     * @param fileParameter   fileParameter
+     * @param fileName        fileName
+     * @return return CUploadFileResult
+     */
+    CUploadFileResult getUploadFileResult(InputStream fileInputStream, String taskId, String password, CFileParameter fileParameter, String fileName) {
         log.info("Start uploading files, task Id: {}, password: {}", taskId, password);
         String url = address.concat(ComPDFKitConstant.API_V1_UPLOAD_FILE);
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
@@ -233,6 +315,7 @@ public class CHttpClient {
             public long contentLength() throws IOException {
                 return fileInputStream.available();
             }
+
             @Override
             public String getFilename() {
                 return fileName;
@@ -243,8 +326,8 @@ public class CHttpClient {
         if (!StringUtils.isEmpty(password)) {
             param.add("password", password);
         }
-        if (!ObjectUtils.isEmpty(CFileParameter)) {
-            param.add("parameter", JSON.toJSONString(CFileParameter));
+        if (!ObjectUtils.isEmpty(fileParameter)) {
+            param.add("parameter", JSON.toJSONString(fileParameter));
         }
         HttpHeaders headers = basicHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
@@ -274,7 +357,12 @@ public class CHttpClient {
         return response.getBody().getData();
     }
 
-
+    /**
+     * executeTask
+     *
+     * @param taskId taskId
+     * @return CCreateTaskResult
+     */
     CCreateTaskResult executeTask(String taskId) {
         log.info("Start executing task transfer, taskId: {}", taskId);
         String url = address.concat(ComPDFKitConstant.API_V1_EXECUTE_TASK).concat("?taskId=").concat(taskId);
@@ -298,7 +386,13 @@ public class CHttpClient {
         return response.getBody().getData();
     }
 
-    CTaskInfoResult queryTaskInfo(String taskId) {
+    /**
+     * getTaskInfo
+     *
+     * @param taskId taskId
+     * @return CTaskInfoResult
+     */
+    CTaskInfoResult getTaskInfo(String taskId) {
         log.info("Start to query the transfer status, taskId: {}", taskId);
         String url = address.concat(ComPDFKitConstant.API_V1_TASK_INFO).concat("?taskId=").concat(taskId);
         ResponseEntity<ComPdfKitResult<CTaskInfoResult>> response;

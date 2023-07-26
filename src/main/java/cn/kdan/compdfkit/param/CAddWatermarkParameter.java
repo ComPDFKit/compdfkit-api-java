@@ -10,6 +10,17 @@ package cn.kdan.compdfkit.param;
 
 public class CAddWatermarkParameter extends CFileParameter {
 
+    public static final String TYPE_TEXT = "text";
+    public static final String TYPE_IMAGE = "image";
+
+    public static final String VERTALIGN_TOP = "top";
+    public static final String VERTALIGN_CENTER = "center";
+    public static final String VERTALIGN_BOTTOM = "bottom";
+
+    public static final String HORIZALIGN_LEFT = "left";
+    public static final String HORIZALIGN_CENTER = "center";
+    public static final String HORIZALIGN_RIGHT = "right";
+
     /**
      * Watermark type (text: text type watermark, image: image type watermark)
      */

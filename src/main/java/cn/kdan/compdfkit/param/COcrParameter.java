@@ -10,9 +10,18 @@ package cn.kdan.compdfkit.param;
 
 public class COcrParameter extends CFileParameter {
 
+    public static final String LANG_AUTO = "auto";
+    public static final String LANG_ENGLISH = "english";
+    public static final String LANG_CHINESE = "chinese";
+    public static final String LANG_CHINESE_TRA = "chinese_tra";
+    public static final String LANG_KOREAN = "korean";
+    public static final String LANG_JAPANESE = "japanese";
+    public static final String LANG_LATIN = "latin";
+    public static final String LANG_DEVANAGARI = "devanagari";
+
     /**
      * language：Supported types and definitions.
-     *
+     * <p>
      * auto - automatic classification language.
      * english - English.
      * chinese - Simplified Chinese.
