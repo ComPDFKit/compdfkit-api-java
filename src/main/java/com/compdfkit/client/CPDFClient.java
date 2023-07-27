@@ -463,11 +463,71 @@ public class CPDFClient {
      * @param file          file
      * @param taskId        taskId
      * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, CPDFFileParameter fileParameter, File imageFile) throws IOException {
+        return getUploadFileResult(file, taskId, null, fileParameter, new FileInputStream(imageFile), imageFile.getName());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param imageFileName imageFileName
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, CPDFFileParameter fileParameter, URL imageFile, String imageFileName) throws IOException {
+        return getUploadFileResult(file, taskId, null, fileParameter, imageFile.openConnection().getInputStream(), imageFileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
      * @param fileName      fileName
      * @return CPDFUploadFileResult
      */
     public CPDFUploadFileResult uploadFile(InputStream file, String taskId, CPDFFileParameter fileParameter, String fileName) {
         return getUploadFileResult(file, taskId, null, fileParameter, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param imageFile     imageFile
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, CPDFFileParameter fileParameter, String fileName, File imageFile) throws IOException {
+        return getUploadFileResult(file, taskId, null, fileParameter, fileName, new FileInputStream(imageFile), imageFile.getName());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param fileName      fileName
+     * @param imageFileName imageFileName
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, CPDFFileParameter fileParameter, String fileName, URL imageFile, String imageFileName) throws IOException {
+        return getUploadFileResult(file, taskId, null, fileParameter, fileName, imageFile.openConnection().getInputStream(), imageFileName);
     }
 
     /**
@@ -490,11 +550,71 @@ public class CPDFClient {
      * @param file          file
      * @param taskId        taskId
      * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param imageFile     imageFile
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, CPDFFileParameter fileParameter, String fileName, File imageFile) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, fileParameter, fileName, new FileInputStream(imageFile), imageFile.getName());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param fileName      fileName
+     * @param imageFileName imageFileName
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, CPDFFileParameter fileParameter, String fileName, URL imageFile, String imageFileName) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, fileParameter, fileName, imageFile.openConnection().getInputStream(), imageFileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
      */
     public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, CPDFFileParameter fileParameter) throws IOException {
         return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, CPDFFileParameter fileParameter, File imageFile) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename(), new FileInputStream(imageFile), imageFile.getName());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param imageFileName imageFileName
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, CPDFFileParameter fileParameter, URL imageFile, String imageFileName) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename(), imageFile.openConnection().getInputStream(), imageFileName);
     }
 
     /**

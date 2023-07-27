@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PDFCompression {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         PDFCompression.pdfCompression();
@@ -38,16 +38,16 @@ public class PDFCompression {
 
     public static void pdfCompression() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFDocumentEditorEnum.COMPRESS);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.COMPRESS);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
         CPDFCompressParameter fileParameter = new CPDFCompressParameter();
         fileParameter.setQuality("50");
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool

@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Ocr {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         Ocr.ocr();
@@ -38,16 +38,16 @@ public class Ocr {
 
     public static void ocr() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFDocumentAIEnum.OCR);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentAIEnum.OCR);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.jpg");
         String filePassword = "";
         CPDFOcrParameter fileParameter = new CPDFOcrParameter();
         fileParameter.setLang("auto");
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool

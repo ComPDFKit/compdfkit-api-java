@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PDFToTxt {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         PDFToTxt.pdfToTxt();
@@ -38,15 +38,15 @@ public class PDFToTxt {
 
     public static void pdfToTxt() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFConversionEnum.PDF_TO_TXT);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.PDF_TO_TXT);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
         CPDFToJpgParameter fileParameter = new CPDFToJpgParameter();
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool

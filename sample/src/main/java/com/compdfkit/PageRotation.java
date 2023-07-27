@@ -29,9 +29,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PageRotation {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         PageRotation.pageRotation();
@@ -39,17 +39,17 @@ public class PageRotation {
 
     public static void pageRotation() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFDocumentEditorEnum.ROTATION);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ROTATION);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
         CPDFPageRotationParameter fileParameter = new CPDFPageRotationParameter();
         fileParameter.setPageOptions(Arrays.asList("1","2"));
         fileParameter.setRotation("90");
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool

@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PDFToWord {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         PDFToWord.pdfToWord();
@@ -38,16 +38,16 @@ public class PDFToWord {
 
     public static void pdfToWord() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFConversionEnum.PDF_TO_WORD);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.PDF_TO_WORD);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
         CPDFToWordParameter fileParameter = new CPDFToWordParameter();
         fileParameter.setIsContainImg(CPDFToWordParameter.IS_CONTAIN_IMG);
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool

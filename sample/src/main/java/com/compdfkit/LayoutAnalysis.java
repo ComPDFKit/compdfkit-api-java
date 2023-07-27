@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class LayoutAnalysis {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         LayoutAnalysis.layoutAnalysis();
@@ -38,15 +38,15 @@ public class LayoutAnalysis {
 
     public static void layoutAnalysis() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFDocumentAIEnum.LAYOUTANALYSIS);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentAIEnum.LAYOUTANALYSIS);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.jpg");
         String filePassword = "";
         CPDFLayoutAnalysisParameter fileParameter = new CPDFLayoutAnalysisParameter();
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool

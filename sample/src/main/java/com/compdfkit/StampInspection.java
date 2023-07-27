@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class StampInspection {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         StampInspection.stampInspection();
@@ -38,15 +38,15 @@ public class StampInspection {
 
     public static void stampInspection() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFDocumentAIEnum.DETECTIONSTAMP);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentAIEnum.DETECTIONSTAMP);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.jpg");
         String filePassword = "";
         CPDFStampInspectionParameter fileParameter = new CPDFStampInspectionParameter();
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool

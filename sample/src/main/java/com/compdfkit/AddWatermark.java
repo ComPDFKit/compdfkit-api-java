@@ -20,6 +20,7 @@ import com.compdfkit.pojo.comPdfKit.CPDFUploadFileResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -28,9 +29,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class AddWatermark {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         AddWatermark.addWatermarkText();
@@ -39,9 +40,9 @@ public class AddWatermark {
 
     public static void addWatermarkText() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
@@ -60,8 +61,8 @@ public class AddWatermark {
         fileParameter.setFullScreen("111");
         fileParameter.setHorizontalSpace("10");
         fileParameter.setVerticalSpace("10");
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool
@@ -90,11 +91,11 @@ public class AddWatermark {
         executor.shutdown();
     }
 
-    public static void addWatermarkImage() throws FileNotFoundException {
+    public static void addWatermarkImage() throws IOException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
@@ -111,8 +112,8 @@ public class AddWatermark {
         fileParameter.setFullScreen("111");
         fileParameter.setHorizontalSpace("10");
         fileParameter.setVerticalSpace("10");
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(),new File("sample/test.jpg"));
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(file,taskId,fileParameter,new File("sample/test.jpg"));
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool

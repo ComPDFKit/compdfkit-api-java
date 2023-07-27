@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ExcelToPDF {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         ExcelToPDF.excelToPDF();

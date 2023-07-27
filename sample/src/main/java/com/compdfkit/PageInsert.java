@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PageInsert {
 
-    private static final String publicKit = "";
+    private static final String publicKey = "";
     private static final String secretKey = "";
-    private static final CPDFClient client = new CPDFClient(publicKit,secretKey);
+    private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
         PageInsert.pageInsert();
@@ -38,9 +38,9 @@ public class PageInsert {
 
     public static void pageInsert() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult CPDFCreateTaskResult = client.createTask(CPDFDocumentEditorEnum.INSERT);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.INSERT);
         // taskId
-        String taskId = CPDFCreateTaskResult.getTaskId();
+        String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
@@ -49,8 +49,8 @@ public class PageInsert {
         fileParameter.setWidth("500");
         fileParameter.setHeight("800");
         fileParameter.setNumber("2");
-        CPDFUploadFileResult CPDFUploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        String fileKey = CPDFUploadFileResult.getFileKey();
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
         // create a ScheduledExecutorService with a fixed thread pool
