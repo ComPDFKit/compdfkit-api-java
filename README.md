@@ -16,7 +16,7 @@ Add the following dependency to your pom.xml:
 <dependency>
     <groupId>com.compdf</groupId>
     <artifactId>compdfkit-pdf-api-java</artifactId>
-    <version>1.2.4</version>
+    <version>0.0.4</version>
 </dependency>
 ```
 
@@ -42,7 +42,7 @@ ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
+CPDFCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String taskId = result.getTaskId();
@@ -60,7 +60,7 @@ ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
+CPDFCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String taskId = result.getTaskId();
@@ -81,7 +81,7 @@ ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
+CPDFCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String taskId = result.getTaskId();
@@ -103,7 +103,7 @@ ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
+CPDFCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String taskId = result.getTaskId();
