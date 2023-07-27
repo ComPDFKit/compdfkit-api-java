@@ -29,7 +29,7 @@ Project public Key : You can find the public key in [Management Panel](https://a
 Project secret Key : You can find the secret Key in [Management Panel](https://api-dashboard.compdf.com/api/keys).
 
 ```java
-ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
+CPDFClient client = new CPDFClient(<publicKey>, <secretKey>);
 ```
 
 ## Create Task
@@ -38,14 +38,20 @@ A task ID is automatically generated for you based on the type of PDF tool you c
 
 ```java
 // Create a client
-ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
+CPDFClient client = new CPDFClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CPDFCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
+CPDFCreateTaskResult result = client.createTask(CPDFConversionEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String taskId = result.getTaskId();
+
+// Upload files
+client.uploadFile(<convertFile>, taskId);
+
+// execute Task
+client.executeTask(taskId);
 ```
 
 ## Upload Files
@@ -56,17 +62,20 @@ Upload the original file and bind the file to the task ID. The field parameter i
 
 ```java
 // Create a client
-ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
+CPDFClient client = new CPDFClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CPDFCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
+CPDFCreateTaskResult result = client.createTask(CPDFConversionEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String taskId = result.getTaskId();
 
 // Upload files
 client.uploadFile(<convertFile>, taskId);
+
+// execute Task
+client.executeTask(taskId);
 ```
 
 
@@ -77,11 +86,11 @@ After the file upload is completed, call this interface with the task ID to proc
 
 ```java
 // Create a client
-ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
+CPDFClient client = new CPDFClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CPDFCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
+CPDFCreateTaskResult result = client.createTask(CPDFConversionEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String taskId = result.getTaskId();
@@ -99,11 +108,11 @@ Request task status and file-related metadata based on the task ID.
 
 ```java
 // Create a client
-ComPDFKitClient client = new ComPDFKitClient(<publicKey>, <secretKey>);
+CPDFClient client = new CPDFClient(<publicKey>, <secretKey>);
 
 // Create a task
 // Create an example of a PDF TO WORD task
-CPDFCreateTaskResult result = client.createTask(CPDFToOfficeEnum.PDF_TO_WORD.getValue());
+CPDFCreateTaskResult result = client.createTask(CPDFConversionEnum.PDF_TO_WORD.getValue());
 
 // Get a task id
 String taskId = result.getTaskId();
@@ -115,7 +124,7 @@ client.uploadFile(<convertFile>, taskId);
 client.executeTask(taskId);
 
 // query TaskInfo
-CTaskInfoResult taskInfo = client.getTaskInfo(taskId);
+CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
 ```
 
 ## Resources
