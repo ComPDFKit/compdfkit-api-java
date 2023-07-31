@@ -49,30 +49,18 @@ public class PDFToTxt {
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);
-        // create a ScheduledExecutorService with a fixed thread pool
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        // create an AtomicReference to hold the future
-        AtomicReference<ScheduledFuture<?>> futureRef = new AtomicReference<>();
-        // schedule a task to check the task status at a fixed rate
-        futureRef.set(executor.scheduleAtFixedRate(() -> {
-            // get task processing information
-            CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
-            // determine whether the task status is "TaskFinish"
-            if (taskInfo.getTaskStatus().equals(CPDFConstant.TASK_FINISH)) {
-                System.out.println(taskInfo);
-                // get the final file processing information
-                CPDFFileInfo fileInfo = client.getFileInfo(fileKey);
-                System.out.println(fileInfo);
-                // if the task is finished, cancel the scheduled task
-                futureRef.get().cancel(false);
-            }
-        }, 0, 5, TimeUnit.SECONDS));
-        // schedule a task to cancel the scheduled task after 15 minutes
-        executor.schedule(() -> {
-            futureRef.get().cancel(false);
-        }, 15, TimeUnit.MINUTES);
-        // shutdown the executor
-        executor.shutdown();
+        // get task processing information
+        CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
+        // determine whether the task status is "TaskFinish"
+        if (taskInfo.getTaskStatus().equals(CPDFConstant.TASK_FINISH)) {
+            System.out.println(taskInfo);
+            // get the final file processing information
+            CPDFFileInfo fileInfo = client.getFileInfo(fileKey);
+            System.out.println(fileInfo);
+            // if the task is finished, cancel the scheduled task
+        }else {
+            System.out.println("Task incomplete processing");
+        }
     }
 
 }
