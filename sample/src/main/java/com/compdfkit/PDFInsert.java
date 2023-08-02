@@ -11,7 +11,7 @@ package com.compdfkit;
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
 import com.compdfkit.enums.CPDFDocumentEditorEnum;
-import com.compdfkit.param.CPDFPageMergeParameter;
+import com.compdfkit.param.CPDFPageInsertParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
 import com.compdfkit.pojo.comPdfKit.CPDFFileInfo;
 import com.compdfkit.pojo.comPdfKit.CPDFTaskInfoResult;
@@ -20,39 +20,31 @@ import com.compdfkit.pojo.comPdfKit.CPDFUploadFileResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
-public class PageMerge {
+public class PDFInsert {
 
     private static final String publicKey = "";
     private static final String secretKey = "";
     private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
-        PageMerge.pageMerge();
+        PDFInsert.pageInsert();
     }
 
-    public static void pageMerge() throws FileNotFoundException {
+    public static void pageInsert() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.MERGE);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.INSERT);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
-        CPDFPageMergeParameter fileParameter = new CPDFPageMergeParameter();
-        fileParameter.setPageOptions(Arrays.asList("1","2"));
+        CPDFPageInsertParameter fileParameter = new CPDFPageInsertParameter();
+        fileParameter.setTargetPage("1");
+        fileParameter.setWidth("500");
+        fileParameter.setHeight("800");
+        fileParameter.setNumber("2");
         CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
-        // upload File
-        File fileSecond = new File("sample/test.pdf");
-        CPDFPageMergeParameter fileParameterSecond = new CPDFPageMergeParameter();
-        fileParameterSecond.setPageOptions(Arrays.asList("1","2"));
-        client.uploadFile(new FileInputStream(fileSecond),taskId,fileParameterSecond,file.getName());
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
         client.executeTask(taskId);

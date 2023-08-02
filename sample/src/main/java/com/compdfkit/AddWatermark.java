@@ -58,7 +58,7 @@ public class AddWatermark {
         fileParameter.setYoffset("100");
         fileParameter.setContent("test");
         fileParameter.setTextColor("#59c5bb");
-        fileParameter.setFullScreen("111");
+        fileParameter.setFullScreen("1");
         fileParameter.setHorizontalSpace("10");
         fileParameter.setVerticalSpace("10");
         CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
@@ -97,7 +97,7 @@ public class AddWatermark {
         fileParameter.setHorizalign("left");
         fileParameter.setXoffset("100");
         fileParameter.setYoffset("100");
-        fileParameter.setFullScreen("111");
+        fileParameter.setFullScreen("1");
         fileParameter.setHorizontalSpace("10");
         fileParameter.setVerticalSpace("10");
         CPDFUploadFileResult uploadFileResult = client.uploadFile(file,taskId,fileParameter,new File("sample/test.jpg"));
