@@ -43,11 +43,11 @@
 
     <groupId>com.compdf</groupId>
     <artifactId>compdfkit-api-java</artifactId>
-    <version>0.0.6</version>
+    <version>0.0.7</version>
 
-    <name>compdfkit-pdf-api-java</name>
-    <description>compdfkit-pdf-api-java</description>
-    <url>https://github.com/ComPDFKit/compdfkit-pdf-api-java</url>
+    <name>compdfkit-api-java</name>
+    <description>compdfkit-api-java</description>
+    <url>https://github.com/ComPDFKit/compdfkit-api-java</url>
 
     <licenses>
         <license>
@@ -70,9 +70,9 @@
     </developers>
 
     <scm>
-        <connection>https://github.com/ComPDFKit/compdfkit-pdf-api-java.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:ComPDFKit/compdfkit-pdf-api-java.git</developerConnection>
-        <url>https://github.com/ComPDFKit/compdfkit-pdf-api-java</url>
+        <connection>https://github.com/ComPDFKit/compdfkit-api-java.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:ComPDFKit/compdfkit-api-java.git</developerConnection>
+        <url>https://github.com/ComPDFKit/compdfkit-api-java</url>
     </scm>
 
 
@@ -165,7 +165,7 @@
 
     </profiles>
     <build>
-        <finalName>compdfkit-pdf-api-java</finalName>
+        <finalName>compdfkit-api-java</finalName>
     </build>
 
 </project>
