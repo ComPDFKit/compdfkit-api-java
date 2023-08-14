@@ -43,7 +43,7 @@
 
     <groupId>com.compdf</groupId>
     <artifactId>compdfkit-api-java</artifactId>
-    <version>0.0.7</version>
+    <version>1.2.4</version>
 
     <name>compdfkit-api-java</name>
     <description>compdfkit-api-java</description>
