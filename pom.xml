@@ -58,14 +58,9 @@
 
     <developers>
         <developer>
-            <id>tangxiangan</id>
-            <name>tangxiangan</name>
-            <email>tangxiangan@kdanmobile.com</email>
-            <roles>
-                <role>Project Developer</role>
-                <role>Architect</role>
-            </roles>
-            <timezone>+8</timezone>
+            <id>ComPDFKit</id>
+            <name>ComPDFKit</name>
+            <email>compdf@support.com</email>
         </developer>
     </developers>
 
