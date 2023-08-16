@@ -8,6 +8,7 @@
 package com.compdfkit.client;
 
 
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFDocumentAIEnum;
 import com.compdfkit.enums.CPDFConversionEnum;
 import com.compdfkit.enums.CPDFDocumentEditorEnum;
@@ -103,7 +104,7 @@ public class CPDFClient {
      * get file info
      *
      * @param fileKey  fileKey
-     * @param language 1:English, 2:Chinese
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
      * @return CPDFFileInfo
      */
     public CPDFFileInfo getFileInfo(String fileKey, Integer language) {
@@ -145,7 +146,7 @@ public class CPDFClient {
      * createTask
      *
      * @param executeTypeUrl task execution type
-     * @param language       1:English, 2:Chinese
+     * @param language       Interface error information language (1, English, 2, Chinese) {@link CPDFLanguageConstant}
      * @return CPDFCreateTaskResult
      */
     public CPDFCreateTaskResult createTask(String executeTypeUrl, Integer language) {
@@ -166,7 +167,7 @@ public class CPDFClient {
      * createTask
      *
      * @param conversionEnum task execution type
-     * @param language       1:English, 2:Chinese
+     * @param language       1:English, 2:Chinese {@link CPDFLanguageConstant}
      * @return CPDFCreateTaskResult
      */
     public CPDFCreateTaskResult createTask(CPDFConversionEnum conversionEnum, Integer language) {
@@ -187,7 +188,7 @@ public class CPDFClient {
      * createTask
      *
      * @param documentEditorEnum task execution type
-     * @param language           1:English, 2:Chinese
+     * @param language           1:English, 2:Chinese {@link CPDFLanguageConstant}
      * @return CPDFCreateTaskResult
      */
     public CPDFCreateTaskResult createTask(CPDFDocumentEditorEnum documentEditorEnum, Integer language) {
@@ -208,7 +209,7 @@ public class CPDFClient {
      * createTask
      *
      * @param documentAIEnum task execution type
-     * @param language       1:English, 2:Chinese
+     * @param language       1:English, 2:Chinese {@link CPDFLanguageConstant}
      * @return CPDFCreateTaskResult
      */
     public CPDFCreateTaskResult createTask(CPDFDocumentAIEnum documentAIEnum, Integer language) {
@@ -233,7 +234,7 @@ public class CPDFClient {
      * @param file     file
      * @param taskId   taskId
      * @param password password
-     * @param language 1:English, 2:Chinese
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
      * @return CPDFUploadFileResult
      */
     public CPDFUploadFileResult uploadFile(File file, String taskId, String password, Integer language) {
@@ -260,7 +261,7 @@ public class CPDFClient {
      * @param taskId   taskId
      * @param password password
      * @param fileName fileName
-     * @param language 1:English, 2:Chinese
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
      * @return CPDFUploadFileResult
      */
     public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String password, String fileName, Integer language) {
@@ -284,6 +285,21 @@ public class CPDFClient {
     /**
      * uploadFile
      *
+     * @param file     fileUrl
+     * @param taskId   taskId
+     * @param password password
+     * @param fileName fileName
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException url openConnection error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, String password, String fileName, Integer language) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, null, fileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
      * @param file     file
      * @param taskId   taskId
      * @param password password
@@ -292,6 +308,20 @@ public class CPDFClient {
      */
     public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, String password) throws IOException {
         return getUploadFileResult(file.getInputStream(), taskId, password, null, file.getOriginalFilename());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file     file
+     * @param taskId   taskId
+     * @param password password
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, String password, Integer language) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, password, null, file.getOriginalFilename(), language);
     }
 
     /**
@@ -310,11 +340,36 @@ public class CPDFClient {
      *
      * @param file     file
      * @param taskId   taskId
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, Integer language) {
+        return getUploadFileResult(file, taskId, null, null, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file     file
+     * @param taskId   taskId
      * @param fileName fileName
      * @return CPDFUploadFileResult
      */
     public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String fileName) {
         return getUploadFileResult(file, taskId, null, null, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file     file
+     * @param taskId   taskId
+     * @param fileName fileName
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String fileName, Integer language) {
+        return getUploadFileResult(file, taskId, null, null, fileName, language);
     }
 
     /**
@@ -333,6 +388,20 @@ public class CPDFClient {
     /**
      * uploadFile
      *
+     * @param file     fileUrl
+     * @param taskId   taskId
+     * @param fileName fileName
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException url openConnection error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, String fileName, Integer language) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, null, fileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
      * @param file   file
      * @param taskId taskId
      * @return CPDFUploadFileResult
@@ -340,6 +409,19 @@ public class CPDFClient {
      */
     public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId) throws IOException {
         return getUploadFileResult(file.getInputStream(), taskId, null, null, file.getOriginalFilename());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file     file
+     * @param taskId   taskId
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, Integer language) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, null, null, file.getOriginalFilename(), language);
     }
 
     /**
@@ -353,6 +435,20 @@ public class CPDFClient {
      */
     public CPDFUploadFileResult uploadFile(File file, String taskId, String password, CPDFFileParameter fileParameter) {
         return getUploadFileResult(file, taskId, password, fileParameter);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, String password, CPDFFileParameter fileParameter, Integer language) {
+        return getUploadFileResult(file, taskId, password, fileParameter, language);
     }
 
     /**
@@ -378,6 +474,22 @@ public class CPDFClient {
      * @param password      password
      * @param fileParameter fileParameter
      * @param imageFile     imageFile
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws FileNotFoundException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, String password, CPDFFileParameter fileParameter, File imageFile, Integer language) throws FileNotFoundException {
+        return getUploadFileResult(file, taskId, password, fileParameter, new FileInputStream(imageFile), imageFile.getName(), language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
      * @param imageFileName imageFileName
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
@@ -393,11 +505,43 @@ public class CPDFClient {
      * @param taskId        taskId
      * @param password      password
      * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param imageFileName imageFileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, String password, CPDFFileParameter fileParameter, URL imageFile, String imageFileName, Integer language) throws IOException {
+        return getUploadFileResult(file, taskId, password, fileParameter, imageFile.openConnection().getInputStream(), imageFileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
      * @param fileName      fileName
      * @return CPDFUploadFileResult
      */
     public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName) {
         return getUploadFileResult(file, taskId, password, fileParameter, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, Integer language) {
+        return getUploadFileResult(file, taskId, password, fileParameter, fileName, language);
     }
 
     /**
@@ -425,12 +569,47 @@ public class CPDFClient {
      * @param fileParameter fileParameter
      * @param fileName      fileName
      * @param imageFile     imageFile
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws FileNotFoundException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, File imageFile, Integer language) throws FileNotFoundException {
+        return getUploadFileResult(file, taskId, password, fileParameter, fileName, new FileInputStream(imageFile), imageFile.getName(), language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param imageFile     imageFile
      * @param imageFileName imageFileName
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
      */
     public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, URL imageFile, String imageFileName) throws IOException {
         return getUploadFileResult(file, taskId, password, fileParameter, fileName, imageFile.openConnection().getInputStream(), imageFileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param imageFile     imageFile
+     * @param imageFileName imageFileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, URL imageFile, String imageFileName, Integer language) throws IOException {
+        return getUploadFileResult(file, taskId, password, fileParameter, fileName, imageFile.openConnection().getInputStream(), imageFileName, language);
     }
 
 
@@ -447,6 +626,22 @@ public class CPDFClient {
      */
     public CPDFUploadFileResult uploadFile(URL file, String taskId, String password, CPDFFileParameter fileParameter, String fileName) throws IOException {
         return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, fileParameter, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          fileUrl
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException url openConnection error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, Integer language) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, fileParameter, fileName, language);
     }
 
     /**
@@ -474,6 +669,23 @@ public class CPDFClient {
      * @param fileParameter fileParameter
      * @param fileName      fileName
      * @param imageFile     imageFile
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, File imageFile, Integer language) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, fileParameter, fileName, new FileInputStream(imageFile), imageFile.getName(), language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param imageFile     imageFile
      * @param imageFileName imageFileName
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
@@ -489,11 +701,44 @@ public class CPDFClient {
      * @param taskId        taskId
      * @param password      password
      * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param imageFile     imageFile
+     * @param imageFileName imageFileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, URL imageFile, String imageFileName, Integer language) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, password, fileParameter, fileName, imageFile.openConnection().getInputStream(), imageFileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
      */
     public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, String password, CPDFFileParameter fileParameter) throws IOException {
         return getUploadFileResult(file.getInputStream(), taskId, password, fileParameter, file.getOriginalFilename());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, String password, CPDFFileParameter fileParameter, Integer language) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, password, fileParameter, file.getOriginalFilename(), language);
     }
 
     /**
@@ -519,6 +764,22 @@ public class CPDFClient {
      * @param password      password
      * @param fileParameter fileParameter
      * @param imageFile     imageFile
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, String password, CPDFFileParameter fileParameter, File imageFile, Integer language) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, password, fileParameter, file.getOriginalFilename(), new FileInputStream(imageFile), imageFile.getName(), language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
      * @param imageFileName imageFileName
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
@@ -532,11 +793,41 @@ public class CPDFClient {
      *
      * @param file          file
      * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param imageFileName imageFileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, String password, CPDFFileParameter fileParameter, URL imageFile, String imageFileName, Integer language) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, password, fileParameter, file.getOriginalFilename(), imageFile.openConnection().getInputStream(), imageFileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
      * @param fileParameter fileParameter
      * @return CPDFUploadFileResult
      */
     public CPDFUploadFileResult uploadFile(File file, String taskId, CPDFFileParameter fileParameter) {
         return getUploadFileResult(file, taskId, null, fileParameter);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, CPDFFileParameter fileParameter, Integer language) {
+        return getUploadFileResult(file, taskId, null, fileParameter, language);
     }
 
     /**
@@ -560,12 +851,43 @@ public class CPDFClient {
      * @param taskId        taskId
      * @param fileParameter fileParameter
      * @param imageFile     imageFile
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, CPDFFileParameter fileParameter, File imageFile, Integer language) throws IOException {
+        return getUploadFileResult(file, taskId, null, fileParameter, new FileInputStream(imageFile), imageFile.getName(), language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
      * @param imageFileName imageFileName
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
      */
     public CPDFUploadFileResult uploadFile(File file, String taskId, CPDFFileParameter fileParameter, URL imageFile, String imageFileName) throws IOException {
         return getUploadFileResult(file, taskId, null, fileParameter, imageFile.openConnection().getInputStream(), imageFileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param imageFileName imageFileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, CPDFFileParameter fileParameter, URL imageFile, String imageFileName, Integer language) throws IOException {
+        return getUploadFileResult(file, taskId, null, fileParameter, imageFile.openConnection().getInputStream(), imageFileName, language);
     }
 
     /**
@@ -588,12 +910,42 @@ public class CPDFClient {
      * @param taskId        taskId
      * @param fileParameter fileParameter
      * @param fileName      fileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, CPDFFileParameter fileParameter, String fileName, Integer language) {
+        return getUploadFileResult(file, taskId, null, fileParameter, fileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
      * @param imageFile     imageFile
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
      */
     public CPDFUploadFileResult uploadFile(InputStream file, String taskId, CPDFFileParameter fileParameter, String fileName, File imageFile) throws IOException {
         return getUploadFileResult(file, taskId, null, fileParameter, fileName, new FileInputStream(imageFile), imageFile.getName());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param imageFile     imageFile
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, CPDFFileParameter fileParameter, String fileName, File imageFile, Integer language) throws IOException {
+        return getUploadFileResult(file, taskId, null, fileParameter, fileName, new FileInputStream(imageFile), imageFile.getName(), language);
     }
 
     /**
@@ -618,6 +970,23 @@ public class CPDFClient {
      * @param file          file
      * @param taskId        taskId
      * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param fileName      fileName
+     * @param imageFileName imageFileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, CPDFFileParameter fileParameter, String fileName, URL imageFile, String imageFileName, Integer language) throws IOException {
+        return getUploadFileResult(file, taskId, null, fileParameter, fileName, imageFile.openConnection().getInputStream(), imageFileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
      * @param fileName      fileName
      * @return CPDFUploadFileResult
      * @throws IOException url openConnection error
@@ -633,12 +1002,43 @@ public class CPDFClient {
      * @param taskId        taskId
      * @param fileParameter fileParameter
      * @param fileName      fileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException url openConnection error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, CPDFFileParameter fileParameter, String fileName, Integer language) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, fileParameter, fileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
      * @param imageFile     imageFile
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
      */
     public CPDFUploadFileResult uploadFile(URL file, String taskId, CPDFFileParameter fileParameter, String fileName, File imageFile) throws IOException {
         return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, fileParameter, fileName, new FileInputStream(imageFile), imageFile.getName());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param imageFile     imageFile
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, CPDFFileParameter fileParameter, String fileName, File imageFile, Integer language) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, fileParameter, fileName, new FileInputStream(imageFile), imageFile.getName(), language);
     }
 
     /**
@@ -663,11 +1063,42 @@ public class CPDFClient {
      * @param file          file
      * @param taskId        taskId
      * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param fileName      fileName
+     * @param imageFileName imageFileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(URL file, String taskId, CPDFFileParameter fileParameter, String fileName, URL imageFile, String imageFileName, Integer language) throws IOException {
+        return getUploadFileResult(file.openConnection().getInputStream(), taskId, null, fileParameter, fileName, imageFile.openConnection().getInputStream(), imageFileName, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
      */
     public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, CPDFFileParameter fileParameter) throws IOException {
         return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename());
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, CPDFFileParameter fileParameter, Integer language) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename(), language);
     }
 
     /**
@@ -691,12 +1122,43 @@ public class CPDFClient {
      * @param taskId        taskId
      * @param fileParameter fileParameter
      * @param imageFile     imageFile
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, CPDFFileParameter fileParameter, File imageFile, Integer language) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename(), new FileInputStream(imageFile), imageFile.getName(), language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
      * @param imageFileName imageFileName
      * @return CPDFUploadFileResult
      * @throws IOException file getInputStream error
      */
     public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, CPDFFileParameter fileParameter, URL imageFile, String imageFileName) throws IOException {
         return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename(), imageFile.openConnection().getInputStream(), imageFileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @param imageFile     imageFile
+     * @param imageFileName imageFileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws IOException file getInputStream error
+     */
+    public CPDFUploadFileResult uploadFile(MultipartFile file, String taskId, CPDFFileParameter fileParameter, URL imageFile, String imageFileName, Integer language) throws IOException {
+        return getUploadFileResult(file.getInputStream(), taskId, null, fileParameter, file.getOriginalFilename(), imageFile.openConnection().getInputStream(), imageFileName, language);
     }
 
     /**
@@ -709,7 +1171,21 @@ public class CPDFClient {
      * @return CPDFUploadFileResult
      */
     private CPDFUploadFileResult getUploadFileResult(File file, String taskId, String password, CPDFFileParameter fileParameter) {
-        return httpClient.getUploadFileResult(file, taskId, password, fileParameter);
+        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, null);
+    }
+
+    /**
+     * getUploadFileResult
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    private CPDFUploadFileResult getUploadFileResult(File file, String taskId, String password, CPDFFileParameter fileParameter, Integer language) {
+        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, language);
     }
 
     /**
@@ -725,7 +1201,24 @@ public class CPDFClient {
      * @throws FileNotFoundException file getInputStream error
      */
     private CPDFUploadFileResult getUploadFileResult(File file, String taskId, String password, CPDFFileParameter fileParameter, InputStream imageInputStream, String imageFileName) throws FileNotFoundException {
-        return httpClient.getUploadFileResult(new FileInputStream(file), taskId, password, fileParameter, file.getName(), imageInputStream, imageFileName);
+        return httpClient.getUploadFileResult(new FileInputStream(file), taskId, password, fileParameter, file.getName(), imageInputStream, imageFileName, null);
+    }
+
+    /**
+     * getUploadFileResult
+     *
+     * @param file             file
+     * @param taskId           taskId
+     * @param password         password
+     * @param fileParameter    fileParameter
+     * @param imageInputStream imageInputStream
+     * @param imageFileName    imageFileName
+     * @param language         1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     * @throws FileNotFoundException file getInputStream error
+     */
+    private CPDFUploadFileResult getUploadFileResult(File file, String taskId, String password, CPDFFileParameter fileParameter, InputStream imageInputStream, String imageFileName, Integer language) throws FileNotFoundException {
+        return httpClient.getUploadFileResult(new FileInputStream(file), taskId, password, fileParameter, file.getName(), imageInputStream, imageFileName, language);
     }
 
     /**
@@ -739,7 +1232,22 @@ public class CPDFClient {
      * @return CPDFUploadFileResult
      */
     private CPDFUploadFileResult getUploadFileResult(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName) {
-        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, fileName, null, null);
+        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, fileName, null, null, null);
+    }
+
+    /**
+     * getUploadFileResult
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      password
+     * @param fileParameter fileParameter
+     * @param fileName      fileName
+     * @param language      1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    private CPDFUploadFileResult getUploadFileResult(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, Integer language) {
+        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, fileName, null, null, language);
     }
 
     /**
@@ -755,7 +1263,24 @@ public class CPDFClient {
      * @return CPDFUploadFileResult
      */
     private CPDFUploadFileResult getUploadFileResult(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, InputStream imageInputStream, String imageFileName) {
-        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, fileName, imageInputStream, imageFileName);
+        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, fileName, imageInputStream, imageFileName, null);
+    }
+
+    /**
+     * getUploadFileResult
+     *
+     * @param file             file
+     * @param taskId           taskId
+     * @param password         password
+     * @param fileParameter    fileParameter
+     * @param fileName         fileName
+     * @param imageInputStream imageInputStream
+     * @param imageFileName    imageFileName
+     * @param language         1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFUploadFileResult
+     */
+    private CPDFUploadFileResult getUploadFileResult(InputStream file, String taskId, String password, CPDFFileParameter fileParameter, String fileName, InputStream imageInputStream, String imageFileName, Integer language) {
+        return httpClient.getUploadFileResult(file, taskId, password, fileParameter, fileName, imageInputStream, imageFileName, language);
     }
 
     /**
@@ -765,7 +1290,18 @@ public class CPDFClient {
      * @return CPDFCreateTaskResult
      */
     public CPDFCreateTaskResult executeTask(String taskId) {
-        return httpClient.executeTask(taskId);
+        return httpClient.executeTask(taskId, null);
+    }
+
+    /**
+     * executeTask
+     *
+     * @param taskId   taskId
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFCreateTaskResult
+     */
+    public CPDFCreateTaskResult executeTask(String taskId, Integer language) {
+        return httpClient.executeTask(taskId, language);
     }
 
     /**
@@ -775,7 +1311,18 @@ public class CPDFClient {
      * @return CPDFTaskInfoResult
      */
     public CPDFTaskInfoResult getTaskInfo(String taskId) {
-        return httpClient.getTaskInfo(taskId);
+        return httpClient.getTaskInfo(taskId, null);
+    }
+
+    /**
+     * get task file info
+     *
+     * @param taskId   taskId
+     * @param language 1:English, 2:Chinese {@link CPDFLanguageConstant}
+     * @return CPDFTaskInfoResult
+     */
+    public CPDFTaskInfoResult getTaskInfo(String taskId, Integer language) {
+        return httpClient.getTaskInfo(taskId, language);
     }
 
 

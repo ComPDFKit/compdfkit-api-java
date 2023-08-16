@@ -77,7 +77,10 @@ public class CPDFAddWatermarkParameter extends CPDFFileParameter {
     private String textColor;
 
     /**
-     * Is it at the front
+     * Setting watermark layer
+     * "0" 代表 false 无需置顶
+     * "1" 代表true 置顶
+     * null 代表无需置顶
      */
     private String front;
 
