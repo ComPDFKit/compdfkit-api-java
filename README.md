@@ -98,7 +98,7 @@ String taskId = result.getTaskId();
 client.uploadFile(<convertFile>, taskId);
 
 // execute Task
-client.executeTask(taskId);
+client.executeTask(taskId, CPDFLanguageConstant.English);
 ```
 
 
@@ -122,7 +122,7 @@ String taskId = result.getTaskId();
 client.uploadFile(<convertFile>, taskId);
 
 // Execute Task
-client.executeTask(taskId);
+client.executeTask(taskId, CPDFLanguageConstant.English);
 
 // Query TaskInfo
 CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);

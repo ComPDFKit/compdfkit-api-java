@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFConversionEnum;
 import com.compdfkit.param.CPDFToRTFParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -38,17 +39,17 @@ public class PDFToRtf {
 
     public static void pdfToRtf() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.PDF_TO_RTF);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.PDF_TO_RTF, CPDFLanguageConstant.English);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
         CPDFToRTFParameter fileParameter = new CPDFToRTFParameter();
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.English);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.English);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"

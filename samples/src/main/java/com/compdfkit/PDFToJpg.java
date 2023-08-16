@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFConversionEnum;
 import com.compdfkit.param.CPDFToJpgParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -38,17 +39,17 @@ public class PDFToJpg {
 
     public static void pdfToJpg() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.PDF_TO_JPG);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.PDF_TO_JPG, CPDFLanguageConstant.English);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
         CPDFToJpgParameter fileParameter = new CPDFToJpgParameter();
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.English);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.English);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"

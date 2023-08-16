@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFDocumentEditorEnum;
 import com.compdfkit.param.CPDFAddWatermarkParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -40,7 +41,7 @@ public class AddWatermark {
 
     public static void addWatermarkText() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK, CPDFLanguageConstant.English);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
@@ -61,10 +62,10 @@ public class AddWatermark {
         fileParameter.setFullScreen("1");
         fileParameter.setHorizontalSpace("10");
         fileParameter.setVerticalSpace("10");
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.English);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.English);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"
@@ -81,7 +82,7 @@ public class AddWatermark {
 
     public static void addWatermarkImage() throws IOException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK, CPDFLanguageConstant.English);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
@@ -104,7 +105,7 @@ public class AddWatermark {
         CPDFUploadFileResult uploadFileResult = client.uploadFile(file,taskId,fileParameter,new File("sample/test.jpg"));
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.English);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"

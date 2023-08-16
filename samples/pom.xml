@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.compdf</groupId>
             <artifactId>compdfkit-api-java</artifactId>
-            <version>1.2.4</version>
+            <version>0.0.8</version>
         </dependency>
     </dependencies>
 

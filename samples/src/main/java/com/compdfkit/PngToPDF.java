@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFConversionEnum;
 import com.compdfkit.param.CPngToPDFParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -38,17 +39,17 @@ public class PngToPDF {
 
     public static void pngToPDF() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.PNG_TO_PDF);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.PNG_TO_PDF, CPDFLanguageConstant.English);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.png");
         String filePassword = "";
         CPngToPDFParameter fileParameter = new CPngToPDFParameter();
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.English);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.English);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"

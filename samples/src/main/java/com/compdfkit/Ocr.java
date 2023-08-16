@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFDocumentAIEnum;
 import com.compdfkit.param.CPDFOcrParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -38,7 +39,7 @@ public class Ocr {
 
     public static void ocr() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentAIEnum.OCR);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentAIEnum.OCR, CPDFLanguageConstant.English);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
@@ -46,10 +47,10 @@ public class Ocr {
         String filePassword = "";
         CPDFOcrParameter fileParameter = new CPDFOcrParameter();
         fileParameter.setLang("auto");
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.English);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.English);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"
