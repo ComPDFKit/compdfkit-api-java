@@ -96,7 +96,18 @@ public class CPDFClient {
      * @return CPDFFileInfo
      */
     public CPDFFileInfo getFileInfo(String fileKey) {
-        return httpClient.getFileInfo(fileKey);
+        return httpClient.getFileInfo(fileKey, null);
+    }
+
+    /**
+     * get file info
+     *
+     * @param fileKey  fileKey
+     * @param language 1:English, 2:Chinese
+     * @return CPDFFileInfo
+     */
+    public CPDFFileInfo getFileInfo(String fileKey, Integer language) {
+        return httpClient.getFileInfo(fileKey, language);
     }
 
     /**
@@ -127,7 +138,18 @@ public class CPDFClient {
      * @return CPDFCreateTaskResult
      */
     public CPDFCreateTaskResult createTask(String executeTypeUrl) {
-        return httpClient.createTask(executeTypeUrl);
+        return httpClient.createTask(executeTypeUrl, null);
+    }
+
+    /**
+     * createTask
+     *
+     * @param executeTypeUrl task execution type
+     * @param language       1:English, 2:Chinese
+     * @return CPDFCreateTaskResult
+     */
+    public CPDFCreateTaskResult createTask(String executeTypeUrl, Integer language) {
+        return httpClient.createTask(executeTypeUrl, language);
     }
 
     /**
@@ -143,6 +165,17 @@ public class CPDFClient {
     /**
      * createTask
      *
+     * @param conversionEnum task execution type
+     * @param language       1:English, 2:Chinese
+     * @return CPDFCreateTaskResult
+     */
+    public CPDFCreateTaskResult createTask(CPDFConversionEnum conversionEnum, Integer language) {
+        return this.createTask(conversionEnum.getValue(), language);
+    }
+
+    /**
+     * createTask
+     *
      * @param documentEditorEnum task execution type
      * @return CPDFCreateTaskResult
      */
@@ -153,11 +186,33 @@ public class CPDFClient {
     /**
      * createTask
      *
+     * @param documentEditorEnum task execution type
+     * @param language           1:English, 2:Chinese
+     * @return CPDFCreateTaskResult
+     */
+    public CPDFCreateTaskResult createTask(CPDFDocumentEditorEnum documentEditorEnum, Integer language) {
+        return this.createTask(documentEditorEnum.getValue(), language);
+    }
+
+    /**
+     * createTask
+     *
      * @param documentAIEnum task execution type
      * @return CPDFCreateTaskResult
      */
     public CPDFCreateTaskResult createTask(CPDFDocumentAIEnum documentAIEnum) {
         return this.createTask(documentAIEnum.getValue());
+    }
+
+    /**
+     * createTask
+     *
+     * @param documentAIEnum task execution type
+     * @param language       1:English, 2:Chinese
+     * @return CPDFCreateTaskResult
+     */
+    public CPDFCreateTaskResult createTask(CPDFDocumentAIEnum documentAIEnum, Integer language) {
+        return this.createTask(documentAIEnum.getValue(), language);
     }
 
     /**
@@ -178,11 +233,38 @@ public class CPDFClient {
      * @param file     file
      * @param taskId   taskId
      * @param password password
+     * @param language 1:English, 2:Chinese
+     * @return CPDFUploadFileResult
+     */
+    public CPDFUploadFileResult uploadFile(File file, String taskId, String password, Integer language) {
+        return getUploadFileResult(file, taskId, password, null, language);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file     file
+     * @param taskId   taskId
+     * @param password password
      * @param fileName fileName
      * @return CPDFUploadFileResult
      */
     public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String password, String fileName) {
         return getUploadFileResult(file, taskId, password, null, fileName);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file     file
+     * @param taskId   taskId
+     * @param password password
+     * @param fileName fileName
+     * @param language 1:English, 2:Chinese
+     * @return CPDFUploadFileResult
+     */
+    public CPDFUploadFileResult uploadFile(InputStream file, String taskId, String password, String fileName, Integer language) {
+        return getUploadFileResult(file, taskId, password, null, fileName, language);
     }
 
     /**
