@@ -47,7 +47,7 @@ public class PDFToExcel {
         File file = new File("sample/test.pdf");
         String filePassword = "";
         CPDFToExcelParameter fileParameter = new CPDFToExcelParameter();
-        fileParameter.setIsContainImg(CPDFToWordParameter.IS_CONTAIN_IMG);
+        fileParameter.setIsContainImg(CPDFToExcelParameter.IS_CONTAIN_IMG);
         CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.English);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks

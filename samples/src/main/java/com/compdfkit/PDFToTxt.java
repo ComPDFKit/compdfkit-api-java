@@ -12,7 +12,7 @@ import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
 import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFConversionEnum;
-import com.compdfkit.param.CPDFToJpgParameter;
+import com.compdfkit.param.CPDFToTxtParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
 import com.compdfkit.pojo.comPdfKit.CPDFFileInfo;
 import com.compdfkit.pojo.comPdfKit.CPDFTaskInfoResult;
@@ -21,11 +21,6 @@ import com.compdfkit.pojo.comPdfKit.CPDFUploadFileResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class PDFToTxt {
 
@@ -45,7 +40,7 @@ public class PDFToTxt {
         // upload File
         File file = new File("sample/test.pdf");
         String filePassword = "";
-        CPDFToJpgParameter fileParameter = new CPDFToJpgParameter();
+        CPDFToTxtParameter fileParameter = new CPDFToTxtParameter();
         CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.English);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
