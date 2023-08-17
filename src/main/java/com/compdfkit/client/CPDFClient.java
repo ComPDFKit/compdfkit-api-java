@@ -48,7 +48,6 @@ public class CPDFClient {
         RestTemplate restTemplate = restTemplateBuilder
                 .build();
         httpClient = new CPDFHttpClient(restTemplate, publicKey, secretKey);
-        httpClient.refreshAccessToken();
     }
 
     /**
