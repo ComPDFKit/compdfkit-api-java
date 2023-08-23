@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFDocumentEditorEnum;
 import com.compdfkit.param.CPDFPageInsertParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -33,7 +34,7 @@ public class PDFInsert {
 
     public static void pageInsert() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.INSERT);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.INSERT, CPDFLanguageConstant.ENGLISH);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
@@ -44,10 +45,10 @@ public class PDFInsert {
         fileParameter.setWidth("500");
         fileParameter.setHeight("800");
         fileParameter.setNumber("2");
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.ENGLISH);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"

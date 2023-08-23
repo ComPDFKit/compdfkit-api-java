@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFDocumentAIEnum;
 import com.compdfkit.param.CPDFFormRecognizerParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -20,11 +21,6 @@ import com.compdfkit.pojo.comPdfKit.CPDFUploadFileResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class FormRecognizer {
 
@@ -38,7 +34,7 @@ public class FormRecognizer {
 
     public static void formRecognizer() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentAIEnum.TABLEREC);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentAIEnum.TABLEREC, CPDFLanguageConstant.ENGLISH);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
@@ -46,10 +42,10 @@ public class FormRecognizer {
         String filePassword = "";
         CPDFFormRecognizerParameter fileParameter = new CPDFFormRecognizerParameter();
         fileParameter.setLang("auto");
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.ENGLISH);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"

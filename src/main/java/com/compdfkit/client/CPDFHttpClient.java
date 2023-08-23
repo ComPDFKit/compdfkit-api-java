@@ -164,11 +164,15 @@ public class CPDFHttpClient {
     /**
      * getFileInfo
      *
-     * @param fileKey fileKey
+     * @param fileKey  fileKey
+     * @param language 1:English, 2:Chinese
      * @return CFileInfo
      */
-    CPDFFileInfo getFileInfo(String fileKey) {
+    CPDFFileInfo getFileInfo(String fileKey, Integer language) {
         String url = address.concat(CPDFConstant.API_V1_FILE_INFO).concat("?fileKey=").concat(fileKey);
+        if (Objects.nonNull(language)){
+            url = url.concat("&language=").concat(String.valueOf(language));
+        }
         ResponseEntity<CPDFResult<CPDFFileInfo>> response;
         ParameterizedTypeReference<CPDFResult<CPDFFileInfo>> typeRef = new ParameterizedTypeReference<CPDFResult<CPDFFileInfo>>() {
         };
@@ -255,10 +259,14 @@ public class CPDFHttpClient {
      * createTask
      *
      * @param executeTypeUrl executeTypeUrl
+     * @param language       1:English, 2:Chinese
      * @return CCreateTaskResult
      */
-    CPDFCreateTaskResult createTask(String executeTypeUrl) {
+    CPDFCreateTaskResult createTask(String executeTypeUrl, Integer language) {
         String url = address.concat(CPDFConstant.API_V1_CREATE_TASK).replace("{executeTypeUrl}", executeTypeUrl);
+        if (Objects.nonNull(language)){
+            url = url.concat("&language=").concat(String.valueOf(language));
+        }
         ResponseEntity<CPDFResult<CPDFCreateTaskResult>> response;
         ParameterizedTypeReference<CPDFResult<CPDFCreateTaskResult>> typeRef = new ParameterizedTypeReference<CPDFResult<CPDFCreateTaskResult>>() {
         };
@@ -286,11 +294,12 @@ public class CPDFHttpClient {
      * @param taskId        taskId
      * @param password      password
      * @param fileParameter fileParameter
+     * @param language      1:English, 2:Chinese
      * @return CUploadFileResult
      */
-    CPDFUploadFileResult getUploadFileResult(File file, String taskId, String password, CPDFFileParameter fileParameter) {
+    CPDFUploadFileResult getUploadFileResult(File file, String taskId, String password, CPDFFileParameter fileParameter, Integer language) {
         try {
-            return this.getUploadFileResult(new FileInputStream(file), taskId, password, fileParameter, file.getName(),null,null);
+            return this.getUploadFileResult(new FileInputStream(file), taskId, password, fileParameter, file.getName(), null, null, language);
         } catch (FileNotFoundException e) {
             throw new CPDFException(e.getMessage(), e);
         }
@@ -306,9 +315,10 @@ public class CPDFHttpClient {
      * @param fileName         fileName
      * @param imageInputStream imageFile
      * @param imageFileName    imageFileName
+     * @param language         1:English, 2:Chinese
      * @return return CUploadFileResult
      */
-    CPDFUploadFileResult getUploadFileResult(InputStream fileInputStream, String taskId, String password, CPDFFileParameter fileParameter, String fileName, InputStream imageInputStream, String imageFileName) {
+    CPDFUploadFileResult getUploadFileResult(InputStream fileInputStream, String taskId, String password, CPDFFileParameter fileParameter, String fileName, InputStream imageInputStream, String imageFileName, Integer language) {
         log.info("Start uploading files, task Id: {}, password: {}", taskId, password);
         String url = address.concat(CPDFConstant.API_V1_UPLOAD_FILE);
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
@@ -325,6 +335,9 @@ public class CPDFHttpClient {
         };
         param.add("file", inputStreamResource);
         param.add("taskId", taskId);
+        if (Objects.nonNull(language)){
+            param.add("language", language);
+        }
         if (!StringUtils.isEmpty(password)) {
             param.add("password", password);
         }
@@ -337,6 +350,7 @@ public class CPDFHttpClient {
                 public long contentLength() throws IOException {
                     return imageInputStream.available();
                 }
+
                 @Override
                 public String getFilename() {
                     return imageFileName;
@@ -375,12 +389,16 @@ public class CPDFHttpClient {
     /**
      * executeTask
      *
-     * @param taskId taskId
+     * @param taskId   taskId
+     * @param language 1:English, 2:Chinese
      * @return CCreateTaskResult
      */
-    CPDFCreateTaskResult executeTask(String taskId) {
+    CPDFCreateTaskResult executeTask(String taskId, Integer language) {
         log.info("Start executing task transfer, taskId: {}", taskId);
         String url = address.concat(CPDFConstant.API_V1_EXECUTE_TASK).concat("?taskId=").concat(taskId);
+        if (Objects.nonNull(language)){
+            url = url.concat("&language=").concat(String.valueOf(language));
+        }
         ResponseEntity<CPDFResult<CPDFCreateTaskResult>> response;
         ParameterizedTypeReference<CPDFResult<CPDFCreateTaskResult>> result = new ParameterizedTypeReference<CPDFResult<CPDFCreateTaskResult>>() {
         };
@@ -404,12 +422,16 @@ public class CPDFHttpClient {
     /**
      * getTaskInfo
      *
-     * @param taskId taskId
+     * @param taskId   taskId
+     * @param language 1:English, 2:Chinese
      * @return CTaskInfoResult
      */
-    CPDFTaskInfoResult getTaskInfo(String taskId) {
+    CPDFTaskInfoResult getTaskInfo(String taskId, Integer language) {
         log.info("Start to query the transfer status, taskId: {}", taskId);
         String url = address.concat(CPDFConstant.API_V1_TASK_INFO).concat("?taskId=").concat(taskId);
+        if (Objects.nonNull(language)){
+            url = url.concat("&language=").concat(String.valueOf(language));
+        }
         ResponseEntity<CPDFResult<CPDFTaskInfoResult>> response;
         ParameterizedTypeReference<CPDFResult<CPDFTaskInfoResult>> result = new ParameterizedTypeReference<CPDFResult<CPDFTaskInfoResult>>() {
         };

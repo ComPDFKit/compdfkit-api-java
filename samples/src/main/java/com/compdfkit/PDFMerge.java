@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFDocumentEditorEnum;
 import com.compdfkit.param.CPDFPageMergeParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -34,7 +35,7 @@ public class PDFMerge {
 
     public static void pageMerge() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.MERGE);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.MERGE, CPDFLanguageConstant.ENGLISH);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
@@ -42,7 +43,7 @@ public class PDFMerge {
         String filePassword = "";
         CPDFPageMergeParameter fileParameter = new CPDFPageMergeParameter();
         fileParameter.setPageOptions(Arrays.asList("1","2"));
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
         // upload File
         File fileSecond = new File("sample/test.pdf");
         CPDFPageMergeParameter fileParameterSecond = new CPDFPageMergeParameter();
@@ -50,7 +51,7 @@ public class PDFMerge {
         client.uploadFile(new FileInputStream(fileSecond),taskId,fileParameterSecond,file.getName());
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.ENGLISH);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"

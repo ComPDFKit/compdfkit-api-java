@@ -10,6 +10,7 @@ package com.compdfkit;
 
 import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
+import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFDocumentEditorEnum;
 import com.compdfkit.param.CPDFPageSplitParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
@@ -34,7 +35,7 @@ public class PDFSplit {
 
     public static void pageSplit() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.SPLIT);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.SPLIT, CPDFLanguageConstant.ENGLISH);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
@@ -42,10 +43,10 @@ public class PDFSplit {
         String filePassword = "";
         CPDFPageSplitParameter fileParameter = new CPDFPageSplitParameter();
         fileParameter.setPageOptions(Arrays.asList("1","2"));
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName());
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
-        client.executeTask(taskId);
+        client.executeTask(taskId, CPDFLanguageConstant.ENGLISH);
         // get task processing information
         CPDFTaskInfoResult taskInfo = client.getTaskInfo(taskId);
         // determine whether the task status is "TaskFinish"
