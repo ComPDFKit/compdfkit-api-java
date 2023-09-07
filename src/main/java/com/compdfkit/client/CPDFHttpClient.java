@@ -265,7 +265,7 @@ public class CPDFHttpClient {
     CPDFCreateTaskResult createTask(String executeTypeUrl, Integer language) {
         String url = address.concat(CPDFConstant.API_V1_CREATE_TASK).replace("{executeTypeUrl}", executeTypeUrl);
         if (Objects.nonNull(language)){
-            url = url.concat("&language=").concat(String.valueOf(language));
+            url = url.concat("?language=").concat(String.valueOf(language));
         }
         ResponseEntity<CPDFResult<CPDFCreateTaskResult>> response;
         ParameterizedTypeReference<CPDFResult<CPDFCreateTaskResult>> typeRef = new ParameterizedTypeReference<CPDFResult<CPDFCreateTaskResult>>() {
