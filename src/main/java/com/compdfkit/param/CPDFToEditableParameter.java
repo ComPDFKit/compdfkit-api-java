@@ -8,29 +8,17 @@
 package com.compdfkit.param;
 
 
-public class CPDFToRTFParameter extends CPDFFileParameter {
-
-    public static final String IS_CONTAIN_ANNOT = "1";
-    public static final String NOT_IS_CONTAIN_ANNOT = "0";
-    public static final String IS_CONTAIN_IMG = "1";
-    public static final String NOT_IS_CONTAIN_IMG = "0";
-
+public class CPDFToEditableParameter extends CPDFFileParameter {
     public static final String IS_ALLOW_OCR = "1";
     public static final String NOT_ALLOW_OCR = "0";
     public static final String IS_CONTAIN_OCR_BG = "1";
     public static final String NOT_CONTAIN_OCR_BG = "0";
-    /**
-     * Typesetting method (1: flow layout, 0: box layout) Default box layout
-     */
-    private String isContainAnnot;
-
-    /**
-     * Whether to include pictures (1: yes, 0: no)
-     */
-    private String isContainImg;
 
     private String isAllowOcr;
+
     private String isContainOcrBg;
+
+    private Integer lang;
 
     public String getIsAllowOcr() {
         return isAllowOcr;
@@ -48,20 +36,11 @@ public class CPDFToRTFParameter extends CPDFFileParameter {
         this.isContainOcrBg = isContainOcrBg;
     }
 
-    public String getIsContainAnnot() {
-        return isContainAnnot;
+    public Integer getLang() {
+        return lang;
     }
 
-    public void setIsContainAnnot(String isContainAnnot) {
-        this.isContainAnnot = isContainAnnot;
+    public void setLang(Integer lang) {
+        this.lang = lang;
     }
-
-    public String getIsContainImg() {
-        return isContainImg;
-    }
-
-    public void setIsContainImg(String isContainImg) {
-        this.isContainImg = isContainImg;
-    }
-
 }

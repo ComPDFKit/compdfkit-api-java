@@ -8,12 +8,7 @@
 package com.compdfkit.param;
 
 
-public class CPDFToExcelParameter extends CPDFOfficeCommonParameter {
-
-    public static final String IS_CONTAIN_ANNOT = "1";
-    public static final String NOT_IS_CONTAIN_ANNOT = "0";
-    public static final String IS_CONTAIN_IMG = "1";
-    public static final String NOT_IS_CONTAIN_IMG = "0";
+public class CIMGToExcelParameter extends CPDFOfficeCommonParameter {
 
     /**
      * extractContentOptions（1:OnlyText、2:OnlyTable、3:AllContent）
@@ -24,32 +19,6 @@ public class CPDFToExcelParameter extends CPDFOfficeCommonParameter {
      * createWorksheetOptions（1:ForEachTable、2:ForEachPage、3:ForTheDocument）
      */
     private String worksheetOptions;
-
-    /**
-     * Typesetting method (1: flow layout, 0: box layout) Default box layout
-     */
-    private String isContainAnnot;
-
-    /**
-     * Whether to include pictures (1: yes, 0: no)
-     */
-    private String isContainImg;
-
-    public String getIsContainAnnot() {
-        return isContainAnnot;
-    }
-
-    public void setIsContainAnnot(String isContainAnnot) {
-        this.isContainAnnot = isContainAnnot;
-    }
-
-    public String getIsContainImg() {
-        return isContainImg;
-    }
-
-    public void setIsContainImg(String isContainImg) {
-        this.isContainImg = isContainImg;
-    }
 
     public String getContentOptions() {
         return contentOptions;

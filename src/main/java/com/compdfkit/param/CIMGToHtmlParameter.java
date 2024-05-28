@@ -8,13 +8,7 @@
 package com.compdfkit.param;
 
 
-public class CPDFToHtmlParameter extends CPDFOfficeCommonParameter {
-
-    public static final String IS_CONTAIN_ANNOT = "1";
-    public static final String NOT_IS_CONTAIN_ANNOT = "0";
-    public static final String IS_CONTAIN_IMG = "1";
-    public static final String NOT_IS_CONTAIN_IMG = "0";
-
+public class CIMGToHtmlParameter extends CPDFOfficeCommonParameter {
     public static final String SinglePage = "1";
     public static final String SinglePageNavigationByBookmarks = "2";
     public static final String MultiplePages = "3";
@@ -24,32 +18,6 @@ public class CPDFToHtmlParameter extends CPDFOfficeCommonParameter {
      * pageOptions 1:SinglePage、2:SinglePageNavigationByBookmarks、3:MultiplePages、4:MultiplePagesSplitByBookmarks
      */
     private String pageOptions;
-
-    /**
-     * Typesetting method (1: flow layout, 0: box layout) Default box layout
-     */
-    private String isContainAnnot;
-
-    /**
-     * Whether to include pictures (1: yes, 0: no)
-     */
-    private String isContainImg;
-
-    public String getIsContainAnnot() {
-        return isContainAnnot;
-    }
-
-    public void setIsContainAnnot(String isContainAnnot) {
-        this.isContainAnnot = isContainAnnot;
-    }
-
-    public String getIsContainImg() {
-        return isContainImg;
-    }
-
-    public void setIsContainImg(String isContainImg) {
-        this.isContainImg = isContainImg;
-    }
 
     public String getPageOptions() {
         return pageOptions;

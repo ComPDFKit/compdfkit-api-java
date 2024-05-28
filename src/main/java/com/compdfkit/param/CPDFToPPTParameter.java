@@ -8,7 +8,7 @@
 package com.compdfkit.param;
 
 
-public class CPDFToPPTParameter extends CPDFFileParameter {
+public class CPDFToPPTParameter extends CPDFOfficeCommonParameter {
 
     public static final String IS_CONTAIN_ANNOT = "1";
     public static final String NOT_IS_CONTAIN_ANNOT = "0";

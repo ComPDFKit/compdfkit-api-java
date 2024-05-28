@@ -7,7 +7,7 @@
 
 package com.compdfkit.enums;
 
-public enum CPDFConversionEnum {
+public enum  CPDFConversionEnum {
 
     DOC_TO_PDF("doc/pdf"),
     DOCX_TO_PDF("docx/pdf"),
@@ -25,11 +25,23 @@ public enum CPDFConversionEnum {
     PDF_TO_EXCEL("pdf/xlsx"),
     PDF_TO_PPT("pdf/pptx"),
     PDF_TO_TXT("pdf/txt"),
-    PDF_TO_PNG("pdf/png"),
-    PDF_TO_JPG("pdf/jpg"),
     PDF_TO_HTML("pdf/html"),
     PDF_TO_RTF("pdf/rtf"),
-    PDF_TO_CSV("pdf/csv");
+    PDF_TO_CSV("pdf/csv"),
+
+    //img
+    PDF_TO_PNG("pdf/png"),
+    PDF_TO_JPG("pdf/jpg"),
+    IMAGE_TO_WORD("img/docx"),
+    IMAGE_TO_EXCEL("img/xlsx"),
+    IMAGE_TO_PPT("img/pptx"),
+    IMAGE_TO_TXT("img/txt"),
+    IMAGE_TO_CSV("img/csv"),
+    IMAGE_TO_HTML("img/html"),
+    IMAGE_TO_RTF("img/rtf"),
+    PDF_TO_JSON("pdf/json"),
+    PDF_TO_EDITABLE("pdf/editable");
+
 
     private final String value;
 

@@ -8,14 +8,15 @@
 package com.compdfkit.param;
 
 
-public class CPDFToWordParameter extends CPDFFileParameter {
+public class CPDFToWordParameter extends CPDFOfficeCommonParameter {
 
     public static final String IS_CONTAIN_ANNOT = "1";
     public static final String NOT_IS_CONTAIN_ANNOT = "0";
     public static final String IS_CONTAIN_IMG = "1";
     public static final String NOT_IS_CONTAIN_IMG = "0";
-    public static final String IS_FLOW_LAYOUT = "1";
-    public static final String NOT_IS_FLOW_LAYOUT = "0";
+    public static final String FLOW_LAYOUT = "1";
+    public static final String FLOW_LAYOUT_SUPPORT_TABLE = "2";
+    public static final String FRAME_MODE = "3";
 
 
     /**
@@ -28,10 +29,11 @@ public class CPDFToWordParameter extends CPDFFileParameter {
      */
     private String isContainImg;
 
+
     /**
-     * Whether to include comments (1: Yes, 0: No)
+     * 1. Streaming mode; 2. Streaming support table; 3. Frame mode;
      */
-    private String isFlowLayout;
+    private String wordLayoutMode;
 
     public String getIsContainAnnot() {
         return isContainAnnot;
@@ -49,11 +51,11 @@ public class CPDFToWordParameter extends CPDFFileParameter {
         this.isContainImg = isContainImg;
     }
 
-    public String getIsFlowLayout() {
-        return isFlowLayout;
+    public String getWordLayoutMode() {
+        return wordLayoutMode;
     }
 
-    public void setIsFlowLayout(String isFlowLayout) {
-        this.isFlowLayout = isFlowLayout;
+    public void setWordLayoutMode(String wordLayoutMode) {
+        this.wordLayoutMode = wordLayoutMode;
     }
 }
