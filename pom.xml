@@ -40,7 +40,7 @@
         </dependency>
     </dependencies>
 
- n
+
     <groupId>com.compdf</groupId>
     <artifactId>compdfkit-api-java</artifactId>
     <version>1.4.0</version>
