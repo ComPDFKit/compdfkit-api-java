@@ -40,10 +40,10 @@
         </dependency>
     </dependencies>
 
-
+ n
     <groupId>com.compdf</groupId>
     <artifactId>compdfkit-api-java</artifactId>
-    <version>1.3.2.0</version>
+    <version>1.4.0</version>
 
     <name>compdfkit-api-java</name>
     <description>compdfkit-api-java</description>

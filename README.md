@@ -33,7 +33,7 @@ You can install [the Maven Repository of ComPDFKit API Library](https://mvnrepos
 <dependency>
     <groupId>com.compdf</groupId>
     <artifactId>compdfkit-api-java</artifactId>
-    <version>1.3.2.0</version>
+    <version>1.4.0</version>
 </dependency>
 ```
 
