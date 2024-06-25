@@ -12,7 +12,7 @@ import com.compdfkit.client.CPDFClient;
 import com.compdfkit.constant.CPDFConstant;
 import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFConversionEnum;
-import com.compdfkit.param.CCSVToPDFParameter;
+import com.compdfkit.param.CIMGToJsonParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
 import com.compdfkit.pojo.comPdfKit.CPDFFileInfo;
 import com.compdfkit.pojo.comPdfKit.CPDFTaskInfoResult;
@@ -22,25 +22,26 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class CSVToPDF {
+public class IMGToJSON {
 
     private static final String publicKey = "";
     private static final String secretKey = "";
     private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
-        CSVToPDF.csvToPDF();
+        IMGToJSON.imgToJSON();
     }
 
-    public static void csvToPDF() throws FileNotFoundException {
+    public static void imgToJSON() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.CSV_TO_PDF, CPDFLanguageConstant.ENGLISH);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFConversionEnum.IMAGE_TO_JSON, CPDFLanguageConstant.ENGLISH);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
-        File file = new File("sample/test.csv");
+        File file = new File("sample/test.img");
         String filePassword = "";
-        CCSVToPDFParameter fileParameter = new CCSVToPDFParameter();
+        CIMGToJsonParameter fileParameter = new CIMGToJsonParameter();
+        fileParameter.setIsAllowOcr(CIMGToJsonParameter.IS_ALLOW_OCR);
         CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
         String fileKey = uploadFileResult.getFileKey();
         // perform tasks
@@ -58,5 +59,6 @@ public class CSVToPDF {
             System.out.println("Task incomplete processing");
         }
     }
+
 
 }

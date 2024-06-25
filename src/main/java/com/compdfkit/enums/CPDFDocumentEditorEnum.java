@@ -1,4 +1,4 @@
-//  Copyright © 2014-2023 PDF Technologies, Inc. All Rights Reserved.
+//  Copyright © 2014-2024 PDF Technologies, Inc. All Rights Reserved.
 //
 //  THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
 //  AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE ComPDFKit LICENSE AGREEMENT.
@@ -17,8 +17,10 @@ public enum CPDFDocumentEditorEnum {
     ROTATION("pdf/rotation"),
     INSERT("pdf/insert"),
     ADD_WATERMARK("pdf/addWatermark"),
-    DEL_WATERMARK("pdf/delWatermark");
-
+    DEL_WATERMARK("pdf/delWatermark"),
+    PDF_CONTENT_COMPARE("pdf/contentCompare"),
+    PDF_COVER_COMPARE("pdf/coverCompare"),
+    ;
     private final String value;
 
     CPDFDocumentEditorEnum(String value) {

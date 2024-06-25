@@ -1,4 +1,4 @@
-//  Copyright © 2014-2023 PDF Technologies, Inc. All Rights Reserved.
+//  Copyright © 2014-2024 PDF Technologies, Inc. All Rights Reserved.
 //
 //  THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
 //  AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE ComPDFKit LICENSE AGREEMENT.
@@ -39,6 +39,7 @@ public enum  CPDFConversionEnum {
     IMAGE_TO_CSV("img/csv"),
     IMAGE_TO_HTML("img/html"),
     IMAGE_TO_RTF("img/rtf"),
+    IMAGE_TO_JSON("img/json"),
     PDF_TO_JSON("pdf/json"),
     PDF_TO_EDITABLE("pdf/editable");
 

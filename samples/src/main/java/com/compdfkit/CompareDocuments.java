@@ -13,6 +13,8 @@ import com.compdfkit.constant.CPDFConstant;
 import com.compdfkit.constant.CPDFLanguageConstant;
 import com.compdfkit.enums.CPDFDocumentEditorEnum;
 import com.compdfkit.param.CPDFAddWatermarkParameter;
+import com.compdfkit.param.CPDFContentComparisonParameter;
+import com.compdfkit.param.CPDFOverlayComparisonParameter;
 import com.compdfkit.pojo.comPdfKit.CPDFCreateTaskResult;
 import com.compdfkit.pojo.comPdfKit.CPDFFileInfo;
 import com.compdfkit.pojo.comPdfKit.CPDFTaskInfoResult;
@@ -23,42 +25,38 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class AddWatermark {
+public class CompareDocuments {
 
     private static final String publicKey = "";
     private static final String secretKey = "";
     private static final CPDFClient client = new CPDFClient(publicKey,secretKey);
 
     public static void main(String[] args) throws FileNotFoundException {
-        AddWatermark.addWatermarkText();
-//        AddWatermark.addWatermarkImage();
+        CompareDocuments.contentComparison();
+//        CompareDocuments.overlayComparison();
     }
 
-    public static void addWatermarkText() throws FileNotFoundException {
+    public static void contentComparison() throws FileNotFoundException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK, CPDFLanguageConstant.ENGLISH);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.PDF_CONTENT_COMPARE, CPDFLanguageConstant.ENGLISH);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
+        File file1 = new File("sample/test1.pdf");
         String filePassword = "";
-        CPDFAddWatermarkParameter fileParameter = new CPDFAddWatermarkParameter();
-        fileParameter.setType("text");
-        fileParameter.setScale("1");
-        fileParameter.setOpacity("0.5");
-        fileParameter.setRotation("0.785");
-        fileParameter.setTargetPages("1-2");
-        fileParameter.setVertalign("center");
-        fileParameter.setHorizalign("left");
-        fileParameter.setXoffset("100");
-        fileParameter.setYoffset("100");
-        fileParameter.setContent("test");
-        fileParameter.setTextColor("#59c5bb");
-        fileParameter.setFullScreen("1");
-        fileParameter.setHorizontalSpace("10");
-        fileParameter.setVerticalSpace("10");
+        CPDFContentComparisonParameter fileParameter = new CPDFContentComparisonParameter();
+        fileParameter.setIsSaveTwo(false);
+        fileParameter.setImgCompare(true);
+        fileParameter.setTextCompare(true);
+        fileParameter.setReplaceColor("#93B9FD");
+        fileParameter.setInsertColor("#C0FFEC");
+        fileParameter.setDeleteColor("#FBBDBF");
         CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
         String fileKey = uploadFileResult.getFileKey();
+
+        CPDFUploadFileResult uploadFileResult1 = client.uploadFile(new FileInputStream(file1),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
+
         // perform tasks
         client.executeTask(taskId, CPDFLanguageConstant.ENGLISH);
         // get task processing information
@@ -75,30 +73,26 @@ public class AddWatermark {
         }
     }
 
-    public static void addWatermarkImage() throws IOException {
+    public static void overlayComparison() throws IOException {
         // create Task
-        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.ADD_WATERMARK, CPDFLanguageConstant.ENGLISH);
+        CPDFCreateTaskResult createTaskResult = client.createTask(CPDFDocumentEditorEnum.PDF_COVER_COMPARE, CPDFLanguageConstant.ENGLISH);
         // taskId
         String taskId = createTaskResult.getTaskId();
         // upload File
         File file = new File("sample/test.pdf");
+        File file1 = new File("sample/test1.pdf");
         String filePassword = "";
-        CPDFAddWatermarkParameter fileParameter = new CPDFAddWatermarkParameter();
-        fileParameter.setType("image");
-        fileParameter.setScale("0.5");
-        fileParameter.setOpacity("0.5");
-        fileParameter.setRotation("45");
-        fileParameter.setTargetPages("1-2");
-        fileParameter.setVertalign("center");
-        fileParameter.setHorizalign("left");
-        fileParameter.setXoffset("50");
-        fileParameter.setYoffset("50");
-        fileParameter.setFullScreen("1");
-        fileParameter.setHorizontalSpace("100");
-        fileParameter.setVerticalSpace("100");
-        fileParameter.setFront("1");
-        CPDFUploadFileResult uploadFileResult = client.uploadFile(file,taskId,fileParameter,new File("sample/test.jpg"));
+        CPDFOverlayComparisonParameter fileParameter = new CPDFOverlayComparisonParameter();
+        fileParameter.setInTransparency("0.5");
+        fileParameter.setNewTransparency("0.5");
+        fileParameter.setCoverType("0");
+        fileParameter.setInColor("#FBBDBF");
+        fileParameter.setNewColor("#93B9FD");
+        CPDFUploadFileResult uploadFileResult = client.uploadFile(new FileInputStream(file),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
         String fileKey = uploadFileResult.getFileKey();
+
+        CPDFUploadFileResult uploadFileResult1 = client.uploadFile(new FileInputStream(file1),taskId,filePassword,fileParameter,file.getName(), CPDFLanguageConstant.ENGLISH);
+
         // perform tasks
         client.executeTask(taskId, CPDFLanguageConstant.ENGLISH);
         // get task processing information
